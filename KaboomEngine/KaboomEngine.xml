@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>KaboomEngine</name>
+    </assembly>
+    <members>
+        <member name="T:Com.Revo.Games.KaboomEngine.IKaboomCell">
+            <summary>
+            Represents a cell of the Kaboom board
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomCell.X">
+            <summary>
+            The x-coordinate of this cell.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomCell.Y">
+            <summary>
+            The y-coordinate of this cell.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomCell.AdjacentMines">
+            <summary>
+            The number of adjacent cells that contain mines.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomCell.IsMine">
+            <summary>
+            Gets wether this cell contains a mine or not.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomCell.IsOpen">
+            <summary>
+            The state (open or covered) of this cell.
+            </summary>
+        </member>
+        <member name="T:Com.Revo.Games.KaboomEngine.IKaboomCellCollection">
+            <summary>
+            A two-dimensional read-only collection of Kaboom board cells.
+            (<see cref="T:Com.Revo.Games.KaboomEngine.IKaboomCell"/>).
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomCellCollection.Width">
+            <summary>
+            The width of the Kaboom board.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomCellCollection.Height">
+            <summary>
+            The height of the Kaboom board.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomCellCollection.Item(System.Int32,System.Int32)">
+            <summary>
+            Returns the Kaboom cell (<see cref="T:Com.Revo.Games.KaboomEngine.IKaboomCell"/> at the specified location.
+            </summary>
+            <param name="x">The x-coordinate of the cell.</param>
+            <param name="y">The y-coordinate of the cell.</param>
+            <returns>The <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomCell"/> representing the cell at the specified location.</returns>
+            <exception cref="T:System.IndexOutOfRangeException"><paramref name="x"/> and/or <paramref name="y"/> were outside of this collection.</exception>
+        </member>
+        <member name="T:Com.Revo.Games.KaboomEngine.IKaboomEngine">
+            <summary>
+            Kaboom engine interface.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomEngine.Width">
+            <summary>
+            The width of the Kaboom board.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomEngine.Height">
+            <summary>
+            The height of the Kaboom board.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomEngine.NumberOfMines">
+            <summary>
+            The number of mines on the Kaboom board.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomEngine.Cells">
+            <summary>
+            The cells on this Kaboom board.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomEngine.State">
+            <summary>
+            The state of the Kaboom board.
+            </summary>
+        </member>
+        <member name="M:Com.Revo.Games.KaboomEngine.IKaboomEngine.Open(System.Int32,System.Int32)">
+            <summary>
+            Tries to open the cell at the given position and returns the resulting <see cref="T:Com.Revo.Games.KaboomEngine.KaboomEngineState"/>.
+            </summary>
+            <param name="x">The x-coordinate of the cell to open.</param>
+            <param name="y">The y-coordinate of the cell to open.</param>
+            <returns>The resulting <see cref="T:Com.Revo.Games.KaboomEngine.KaboomEngineState"/>. <see cref="F:Com.Revo.Games.KaboomEngine.KaboomEngineState.Sweeping"/> if more work is to do,
+            <see cref="F:Com.Revo.Games.KaboomEngine.KaboomEngineState.Solved"/> if the board is solved or
+            <see cref="F:Com.Revo.Games.KaboomEngine.KaboomEngineState.Exploded"/> if the specified cell contained a mine.</returns>
+            <exception cref="T:System.ArgumentException">The specified cell has already been opened.</exception>
+            <exception cref="T:System.IndexOutOfRangeException"><paramref name="x"/> and/or <paramref name="y"/> are outside the board.</exception>
+            <exception cref="T:System.InvalidOperationException">The board already exploded by a previous call or has already been solved.</exception>
+        </member>
+        <member name="M:Com.Revo.Games.KaboomEngine.IKaboomEngine.Reset">
+            <summary>
+            Resets the board to it's inital state.
+            </summary>
+        </member>
+        <member name="T:Com.Revo.Games.KaboomEngine.IKaboomEngineFactory">
+            <summary>
+            Kaboom engine factory interface. A Kaboom engine factory should
+            provide an engine (<see cref="T:Com.Revo.Games.KaboomEngine.IKaboomEngine"/>) for a given board configuration.
+            </summary>
+        </member>
+        <member name="M:Com.Revo.Games.KaboomEngine.IKaboomEngineFactory.CreateEngine(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomEngine"/> for the given board configuration.
+            </summary>
+            <param name="width">The width of the Kaboom board.</param>
+            <param name="height">The height of the Kaboom board.</param>
+            <param name="numberOfMines">The number of mines hidden on the Kaboom board.</param>
+            <returns>A freshly initialized Kaboom board with the given settings.</returns>
+        </member>
+        <member name="T:Com.Revo.Games.KaboomEngine.KaboomEngineFactory">
+            <inheritdoc />
+        </member>
+        <member name="M:Com.Revo.Games.KaboomEngine.KaboomEngineFactory.CreateEngine(System.Int32,System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="T:Com.Revo.Games.KaboomEngine.KaboomEngineState">
+            <summary>
+            Describes a Kaboom board state.
+            </summary>
+        </member>
+        <member name="F:Com.Revo.Games.KaboomEngine.KaboomEngineState.Sweeping">
+            <summary>
+            Sweeping is in progress.
+            </summary>
+        </member>
+        <member name="F:Com.Revo.Games.KaboomEngine.KaboomEngineState.Solved">
+            <summary>
+            The board is solved.
+            </summary>
+        </member>
+        <member name="F:Com.Revo.Games.KaboomEngine.KaboomEngineState.Exploded">
+            <summary>
+            The board exploded by opening a mine cell.
+            </summary>
+        </member>
+    </members>
+</doc>

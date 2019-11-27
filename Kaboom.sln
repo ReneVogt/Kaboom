@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KaboomEngine", "KaboomEngine\KaboomEngine.csproj", "{859C8043-9885-49B9-BE40-B9F437A2272D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NuGet", ".NuGet", "{C2F42BED-1C07-4D8B-9AB2-5955D774AA40}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet.Config = NuGet.Config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0983856F-E1BE-4983-9B7C-CE748592E8F4}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{859C8043-9885-49B9-BE40-B9F437A2272D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{859C8043-9885-49B9-BE40-B9F437A2272D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{859C8043-9885-49B9-BE40-B9F437A2272D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{859C8043-9885-49B9-BE40-B9F437A2272D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {97EDA758-0A84-4E5D-A02F-E01E237F2B8E}
+	EndGlobalSection
+EndGlobal

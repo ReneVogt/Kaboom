@@ -40,7 +40,7 @@ namespace Com.Revo.Games.KaboomEngine {
         public void Reset()
         {
             for(int x = 0; x < Width; x++)
-            for (int y = 0; y < Width; y++)
+            for (int y = 0; y < Height; y++)
                 cells[x, y] = new KaboomCell {X = x, Y = y};
 
             for (int mine = 0; mine < NumberOfMines; mine++)
@@ -74,7 +74,7 @@ namespace Com.Revo.Games.KaboomEngine {
             if (x < Width - 1 && y > 0) yield return (x + 1, y - 1);
 
             if (x > 0) yield return (x - 1, y);
-            if (x > Width - 1) yield return (x + 1, y);
+            if (x < Width - 1) yield return (x + 1, y);
 
             if (x > 0 && y < Height - 1) yield return (x - 1, y + 1);
             if (y < Height - 1) yield return (x, y + 1);

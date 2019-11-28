@@ -16,8 +16,7 @@ namespace Com.Revo.Games.Kaboom.ViewModels {
                 KaboomEngineState.Exploded => "You lost!",
                 KaboomEngineState.Solved => "You win!",
                 _ => $"Mines: {Cells.SelectMany(row => row).Count(cell => cell.State == KaboomCellState.Flagged)}/{engine.NumberOfMines}"};
-        public ObservableCollection<ObservableCollection<KaboomCellModel>> Cells { get; } =
-            new ObservableCollection<ObservableCollection<KaboomCellModel>>();
+        public ObservableCollection<ObservableCollection<KaboomCellModel>> Cells { get; }
 
         public CustomCommand<KaboomCellClickEventArgs> CellClickedCommand { get; }
 
@@ -26,13 +25,17 @@ namespace Com.Revo.Games.Kaboom.ViewModels {
         public KaboomBoardModel(int width, int height, int numberOfMines)
         {
             engine = new KaboomEngineFactory().CreateEngine(width, height, numberOfMines);
+            var cells = new ObservableCollection<ObservableCollection<KaboomCellModel>>();
             for (int y = 0; y < engine.Height; y++)
             {
                 ObservableCollection<KaboomCellModel> row = new ObservableCollection<KaboomCellModel>();
                 for (int x = 0; x < engine.Width; x++)
                     row.Add(new KaboomCellModel(engine.Cells[x, y]));
-                Cells.Add(row);
+                cells.Add(row);
             }
+
+            Cells = cells;
+            OnPropertyChanged(nameof(Cells));
 
             CellClickedCommand = new CustomCommand<KaboomCellClickEventArgs>(OnCellClicked);
         }
@@ -82,8 +85,8 @@ namespace Com.Revo.Games.Kaboom.ViewModels {
 
                 if (!engineCell.IsOpen)
                 {
-                    if (engine.State == KaboomEngineState.Exploded && engineCell.IsMine && cellModel.State != KaboomCellState.Flagged)
-                        cellModel.State = KaboomCellState.Mine;
+                    if (engine.State == KaboomEngineState.Sweeping || cellModel.State == KaboomCellState.Flagged || !engineCell.IsMine) continue;
+                    cellModel.State = engine.State == KaboomEngineState.Exploded ? KaboomCellState.Mine : KaboomCellState.Flagged;
                     continue;
                 }
 

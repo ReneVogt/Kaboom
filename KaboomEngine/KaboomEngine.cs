@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Com.Revo.Games.KaboomEngine {
@@ -44,13 +45,15 @@ namespace Com.Revo.Games.KaboomEngine {
             for (int y = 0; y < Height; y++)
                 cells[x, y] = new KaboomCell {X = x, Y = y};
 
+            HashSet<(int x, int y)> used = new HashSet<(int x, int y)>();
+
             for (int mine = 0; mine < NumberOfMines; mine++)
             {
                 rand:
                 int x = random.Next(Width);
                 int y = random.Next(Height);
+                if (!used.Add((x, y))) goto rand;
                 var cell = (KaboomCell)cells[x, y];
-                if (cell.IsMine) goto rand;
                 cell.IsMine = true;
             }
 

@@ -14,15 +14,13 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
     <DockPanel>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-            <Button Command="{Binding BeginnerCommand}">X</Button>
-            <Button Command="{Binding AdvancedCommand}">XX</Button>
-            <Button Command="{Binding ExpertCommand}">XXX</Button>
-            <Button Command="{Binding UserDefinedCommand}">Custom...</Button>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="4,2,4,2">
+            <Button Command="{Binding BeginnerCommand}" Padding="2" Margin="0,2,2,2">X</Button>
+            <Button Command="{Binding AdvancedCommand}" Padding="2" Margin="2">XX</Button>
+            <Button Command="{Binding ExpertCommand}" Padding="2" Margin="2">XXX</Button>
+            <Button Command="{Binding UserDefinedCommand}" Padding="2" Margin="2">Custom...</Button>
         </StackPanel>
-        <StatusBar DockPanel.Dock="Bottom">
-            <Label Content="{Binding Board.EngineState, Mode=OneWay}"/>
-        </StatusBar>
-        <Views:KaboomBoardControl DataContext="{Binding Board, Mode=OneWay}"/>
+        <Label DockPanel.Dock="Bottom" Content="{Binding Board.EngineState, Mode=OneWay}" Margin="4,2,4,2"/>
+        <Views:KaboomBoardControl Margin="4,0,4,0" DataContext="{Binding Board, Mode=OneWay}"/>
     </DockPanel>
 </Window>

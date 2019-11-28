@@ -13,9 +13,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0983856F-E1BE-4983-9B7C-CE748592E8F4}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		readme.txt = readme.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KaboomEngineTests", "KaboomEngineTests\KaboomEngineTests.csproj", "{78B563C1-B2D6-4DB5-8963-71F52197393A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaboom", "Kaboom\Kaboom.csproj", "{DEE876F5-058A-4198-97A9-A0A966E06309}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +34,10 @@ Global
 		{78B563C1-B2D6-4DB5-8963-71F52197393A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78B563C1-B2D6-4DB5-8963-71F52197393A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78B563C1-B2D6-4DB5-8963-71F52197393A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEE876F5-058A-4198-97A9-A0A966E06309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEE876F5-058A-4198-97A9-A0A966E06309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEE876F5-058A-4198-97A9-A0A966E06309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEE876F5-058A-4198-97A9-A0A966E06309}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

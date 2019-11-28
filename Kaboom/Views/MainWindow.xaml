@@ -3,9 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        xmlns:DesignData="clr-namespace:Com.Revo.Games.Kaboom.DesignerSampleData"
+        xmlns:Views="clr-namespace:Com.Revo.Games.Kaboom.Views"
+        xmlns:ViewModels="clr-namespace:Com.Revo.Games.Kaboom.ViewModels"
+        mc:Ignorable="d" 
+        d:DataContext="{x:Static DesignData:SampleData.MainWindow}"
+        DataContext="{ViewModels:MainWindowModel}"
+        Title="Kaboom"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <DockPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+            <Button Command="{Binding BeginnerCommand}">X</Button>
+            <Button Command="{Binding AdvancedCommand}">XX</Button>
+            <Button Command="{Binding ExpertCommand}">XXX</Button>
+            <Button Command="{Binding UserDefinedCommand}">Custom...</Button>
+        </StackPanel>
+        <StatusBar DockPanel.Dock="Bottom">
+            <Label Content="{Binding Board.EngineState, Mode=OneWay}"/>
+        </StatusBar>
+        <Views:KaboomBoardControl DataContext="{Binding Board, Mode=OneWay}"/>
+    </DockPanel>
 </Window>

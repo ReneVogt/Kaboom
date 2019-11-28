@@ -6,6 +6,9 @@ namespace Com.Revo.Games.Kaboom.ViewModels
 {
     public class KaboomCellModel : INotifyPropertyChanged
     {
+        public int X { get; }
+        public int Y { get; }
+
         KaboomCellState state;
         public KaboomCellState State
         {
@@ -17,6 +20,14 @@ namespace Com.Revo.Games.Kaboom.ViewModels
                 state = value;
                 OnPropertyChanged();
             }
+        }
+
+        public KaboomCellModel()
+            : this(-1, -1) { }
+        public KaboomCellModel(int x, int y)
+        {
+            X = x;
+            Y = y;
         }
         public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChangedInvocator]

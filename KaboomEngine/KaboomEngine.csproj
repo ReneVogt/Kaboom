@@ -54,6 +54,7 @@
     <Compile Include="IKaboomEngine.cs" />
     <Compile Include="IKaboomEngineFactory.cs" />
     <Compile Include="KaboomEngine.cs" />
+    <Compile Include="KaboomEngineExtensions.cs" />
     <Compile Include="KaboomEngineFactory.cs" />
     <Compile Include="KaboomEngineState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

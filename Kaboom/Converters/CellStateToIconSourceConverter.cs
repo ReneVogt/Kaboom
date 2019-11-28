@@ -13,7 +13,7 @@ namespace Com.Revo.Games.Kaboom.Converters
             value is KaboomCellState state
                 ? state switch
                 {
-                    KaboomCellState.Empty => "../Icons/empty.ico",
+                    //KaboomCellState.Empty => "../Icons/empty.ico",
                     KaboomCellState.Mine => "../Icons/mine.ico",
                     KaboomCellState.Neighbours1 => "../Icons/one.ico",
                     KaboomCellState.Neighbours2 => "../Icons/two.ico",

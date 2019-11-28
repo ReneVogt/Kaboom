@@ -7,12 +7,8 @@
              xmlns:Converters="clr-namespace:Com.Revo.Games.Kaboom.Converters"
              mc:Ignorable="d" 
              d:DataContext="{x:Static DesignData:SampleData.CellOne}">
-    <Grid Width="20" Height="20" Background="Gray">
-        <Border BorderBrush="Black" BorderThickness="1">
         <Image Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center"
                Source="{Binding State, Mode=OneWay, Converter={Converters:CellStateToIconSourceConverter}}"
                Stretch="Fill"
                />
-        </Border>
-    </Grid>
 </UserControl>

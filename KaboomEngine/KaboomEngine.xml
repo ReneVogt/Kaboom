@@ -122,6 +122,23 @@
             <param name="numberOfMines">The number of mines hidden on the Kaboom board.</param>
             <returns>A freshly initialized Kaboom board with the given settings.</returns>
         </member>
+        <member name="T:Com.Revo.Games.KaboomEngine.KaboomEngineExtensions">
+            <summary>
+            Provides extension methods for the <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomEngine"/> interface.
+            </summary>
+        </member>
+        <member name="M:Com.Revo.Games.KaboomEngine.KaboomEngineExtensions.GetCellsAdjacentTo(Com.Revo.Games.KaboomEngine.IKaboomEngine,System.Int32,System.Int32)">
+            <summary>
+            Enumerates the coordinates of the cells adjacent to the cell with the
+            specified coordinates.
+            </summary>
+            <param name="engine">The engine the cells are in.</param>
+            <param name="x">The x-coordinate of the current cell.</param>
+            <param name="y">The y-coordinate of the current cell.</param>
+            <returns>An enumeration of the coordinates of the cells adjacent to the specified cell.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="engine"/> was <code>null</code>.</exception>
+            <exception cref="T:System.IndexOutOfRangeException">The specified cell is outside the engine.</exception>
+        </member>
         <member name="T:Com.Revo.Games.KaboomEngine.KaboomEngineFactory">
             <inheritdoc />
         </member>

@@ -7,10 +7,10 @@
              xmlns:Views="clr-namespace:Com.Revo.Games.Kaboom.Views"
              mc:Ignorable="d" 
              d:DataContext="{x:Static DesignData:SampleData.Board}">
-    <Grid>
-        <Grid.Resources>
+        <Border BorderBrush="Black" BorderThickness="1" Background="{x:Static SystemColors.ControlBrush}">
+        <Border.Resources>
             <DataTemplate x:Key="CellTemplate">
-                <Views:KaboomCellControl Content="{Binding}" Margin="1,1,1,1"/>
+                <Views:KaboomCellControl Content="{Binding}" Margin="1,1,1,1" CellClicked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:KaboomBoardControl}}, Path=DataContext.CellClickedCommand}"/>
             </DataTemplate>
             <DataTemplate x:Key="RowTemplate">
                 <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource CellTemplate}">
@@ -21,12 +21,9 @@
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
             </DataTemplate>
-        </Grid.Resources>
-        <Border BorderBrush="Black" BorderThickness="1">
-            <ItemsControl ItemTemplate="{DynamicResource RowTemplate}" ItemsSource="{Binding Cells}" 
-                          Background="Gray"
-                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+        </Border.Resources>
+        <ItemsControl ItemTemplate="{DynamicResource RowTemplate}" ItemsSource="{Binding Cells}" 
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
-    </Grid>
 </UserControl>

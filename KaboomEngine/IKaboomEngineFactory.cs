@@ -1,4 +1,6 @@
-﻿namespace Com.Revo.Games.KaboomEngine {
+﻿using JetBrains.Annotations;
+
+namespace Com.Revo.Games.KaboomEngine {
     /// <summary>
     /// Kaboom engine factory interface. A Kaboom engine factory should
     /// provide an engine (<see cref="IKaboomEngine"/>) for a given board configuration.
@@ -12,6 +14,6 @@
         /// <param name="height">The height of the Kaboom board.</param>
         /// <param name="numberOfMines">The number of mines hidden on the Kaboom board.</param>
         /// <returns>A freshly initialized Kaboom board with the given settings.</returns>
-        IKaboomEngine CreateEngine(int width, int height, int numberOfMines);
+        [NotNull] IKaboomEngine CreateEngine(int width, int height, int numberOfMines);
     }
 }

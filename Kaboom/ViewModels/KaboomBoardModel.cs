@@ -30,7 +30,7 @@ namespace Com.Revo.Games.Kaboom.ViewModels {
             {
                 ObservableCollection<KaboomCellModel> row = new ObservableCollection<KaboomCellModel>();
                 for (int x = 0; x < engine.Width; x++)
-                    row.Add(new KaboomCellModel(x, y));
+                    row.Add(new KaboomCellModel(engine.Cells[x, y]));
                 Cells.Add(row);
             }
 
@@ -55,18 +55,23 @@ namespace Com.Revo.Games.Kaboom.ViewModels {
                         e.ClickedCell.State = KaboomCellState.Flagged;
                     else
                         engine.Open(e.ClickedCell.X, e.ClickedCell.Y);
-                    OnPropertyChanged(nameof(EngineState));
                     break;
                 default:
                     if (e?.ClickType != KaboomCellClickType.Both) return;
                     OpenWherePossible(e.ClickedCell);
-                    return;
+                    break;
             }
 
             UpdateCellStates();
         }
         private void OpenWherePossible(KaboomCellModel cell)
-        { }
+        {
+            var adjacentCells = engine.GetCellsAdjacentTo(cell.X, cell.Y).Select(c => Cells[c.y][c.x]).ToArray();
+            if (adjacentCells.Count(c => c.State == KaboomCellState.Flagged) != cell.AdjacentMines) return;
+
+            foreach (var c in adjacentCells.Where(c => c.State == KaboomCellState.Closed))
+                engine.Open(c.X, c.Y);
+        }
         private void UpdateCellStates()
         {
             for (int y = 0; y < engine.Height; y++)
@@ -88,7 +93,7 @@ namespace Com.Revo.Games.Kaboom.ViewModels {
                     continue;
                 }
 
-                cellModel.State = engineCell.AdjacentMines switch
+                cellModel.State = cellModel.AdjacentMines switch
                 {
                     1 => KaboomCellState.Neighbours1,
                     2 => KaboomCellState.Neighbours2,
@@ -101,6 +106,7 @@ namespace Com.Revo.Games.Kaboom.ViewModels {
                     _ => KaboomCellState.Empty
                 };
             }
+            OnPropertyChanged(nameof(EngineState));
         }
         public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChangedInvocator]

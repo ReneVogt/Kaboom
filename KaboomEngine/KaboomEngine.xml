@@ -92,15 +92,14 @@
         <member name="M:Com.Revo.Games.KaboomEngine.IKaboomEngine.Open(System.Int32,System.Int32)">
             <summary>
             Tries to open the cell at the given position and returns the resulting <see cref="T:Com.Revo.Games.KaboomEngine.KaboomEngineState"/>.
+            If the board is already solved or exploded or if the specified cell has already been opened, nothing will happen.
             </summary>
             <param name="x">The x-coordinate of the cell to open.</param>
             <param name="y">The y-coordinate of the cell to open.</param>
             <returns>The resulting <see cref="T:Com.Revo.Games.KaboomEngine.KaboomEngineState"/>. <see cref="F:Com.Revo.Games.KaboomEngine.KaboomEngineState.Sweeping"/> if more work is to do,
             <see cref="F:Com.Revo.Games.KaboomEngine.KaboomEngineState.Solved"/> if the board is solved or
             <see cref="F:Com.Revo.Games.KaboomEngine.KaboomEngineState.Exploded"/> if the specified cell contained a mine.</returns>
-            <exception cref="T:System.ArgumentException">The specified cell has already been opened.</exception>
             <exception cref="T:System.IndexOutOfRangeException"><paramref name="x"/> and/or <paramref name="y"/> are outside the board.</exception>
-            <exception cref="T:System.InvalidOperationException">The board already exploded by a previous call or has already been solved.</exception>
         </member>
         <member name="M:Com.Revo.Games.KaboomEngine.IKaboomEngine.Reset">
             <summary>

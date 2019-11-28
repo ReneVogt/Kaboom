@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Com.Revo.Games.KaboomEngine;
 using JetBrains.Annotations;
 
 namespace Com.Revo.Games.Kaboom.ViewModels
@@ -8,6 +9,7 @@ namespace Com.Revo.Games.Kaboom.ViewModels
     {
         public int X { get; }
         public int Y { get; }
+        public int AdjacentMines { get; }
 
         KaboomCellState state;
         public KaboomCellState State
@@ -23,11 +25,12 @@ namespace Com.Revo.Games.Kaboom.ViewModels
         }
 
         public KaboomCellModel()
-            : this(-1, -1) { }
-        public KaboomCellModel(int x, int y)
+            : this(null) { }
+        public KaboomCellModel(IKaboomCell cell)
         {
-            X = x;
-            Y = y;
+            X = cell?.X ?? -1;
+            Y = cell?.Y ?? -1;
+            AdjacentMines = cell?.AdjacentMines ?? 0;
         }
         public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChangedInvocator]

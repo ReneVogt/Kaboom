@@ -29,15 +29,14 @@ namespace Com.Revo.Games.KaboomEngine
         KaboomEngineState State { get; }
         /// <summary>
         /// Tries to open the cell at the given position and returns the resulting <see cref="KaboomEngineState"/>.
+        /// If the board is already solved or exploded or if the specified cell has already been opened, nothing will happen.
         /// </summary>
         /// <param name="x">The x-coordinate of the cell to open.</param>
         /// <param name="y">The y-coordinate of the cell to open.</param>
         /// <returns>The resulting <see cref="KaboomEngineState"/>. <see cref="KaboomEngineState.Sweeping"/> if more work is to do,
         /// <see cref="KaboomEngineState.Solved"/> if the board is solved or
         /// <see cref="KaboomEngineState.Exploded"/> if the specified cell contained a mine.</returns>
-        /// <exception cref="ArgumentException">The specified cell has already been opened.</exception>
         /// <exception cref="IndexOutOfRangeException"><paramref name="x"/> and/or <paramref name="y"/> are outside the board.</exception>
-        /// <exception cref="InvalidOperationException">The board already exploded by a previous call or has already been solved.</exception>
         KaboomEngineState Open(int x, int y);
         /// <summary>
         /// Resets the board to it's inital state.

@@ -7,16 +7,18 @@
              xmlns:Views="clr-namespace:Com.Revo.Games.Kaboom.Views"
              mc:Ignorable="d" 
              d:DataContext="{x:Static DesignData:SampleData.Board}">
-        <Border BorderBrush="Black" BorderThickness="1" Background="{x:Static SystemColors.ControlBrush}">
+        <Border BorderBrush="Black" BorderThickness="1" Background="White">
         <Border.Resources>
             <DataTemplate x:Key="CellTemplate">
-                <Views:KaboomCellControl Content="{Binding}" Margin="1,1,1,1" CellClicked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:KaboomBoardControl}}, Path=DataContext.CellClickedCommand}"/>
+                <Border BorderBrush="LightGray" BorderThickness="1">
+                    <Views:KaboomCellControl Content="{Binding}" Margin="0" Padding="0" CellClicked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:KaboomBoardControl}}, Path=DataContext.CellClickedCommand}"/>
+                </Border>
             </DataTemplate>
             <DataTemplate x:Key="RowTemplate">
-                <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource CellTemplate}">
+                <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource CellTemplate}" Margin="0" Padding="0">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
+                            <StackPanel Orientation="Horizontal" Margin="0"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>

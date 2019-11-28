@@ -22,104 +22,101 @@ namespace Com.Revo.Games.Kaboom.DesignerSampleData
 
         static SampleData()
         {
-            Board = new KaboomBoardModel
+            Board = new KaboomBoardModel();
+            Board.Cells.Clear();
+            Board.Cells.Add(new ObservableCollection<KaboomCellModel>
             {
-                Cells =
-                {
-                    new ObservableCollection<KaboomCellModel>
-                    {
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed}
-                    },
-                    new ObservableCollection<KaboomCellModel>
-                    {
-                        new KaboomCellModel {State = KaboomCellState.Empty},
-                        new KaboomCellModel {State = KaboomCellState.Empty},
-                        new KaboomCellModel {State = KaboomCellState.Empty},
-                        new KaboomCellModel {State = KaboomCellState.Empty},
-                        new KaboomCellModel {State = KaboomCellState.Empty},
-                        new KaboomCellModel {State = KaboomCellState.Empty},
-                        new KaboomCellModel {State = KaboomCellState.Empty},
-                        new KaboomCellModel {State = KaboomCellState.Empty},
-                        new KaboomCellModel {State = KaboomCellState.Empty},
-                        new KaboomCellModel {State = KaboomCellState.Empty}
-                    },
-                    new ObservableCollection<KaboomCellModel>
-                    {
-                        new KaboomCellModel {State = KaboomCellState.Neighbours1},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours2},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours3},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours4},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours5},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours6},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours7},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours8},
-                        new KaboomCellModel {State = KaboomCellState.Mine},
-                        new KaboomCellModel {State = KaboomCellState.Flagged}
-                    },
-                    new ObservableCollection<KaboomCellModel>
-                    {
-                        new KaboomCellModel {State = KaboomCellState.Neighbours1},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours2},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours3},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours4},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours5},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours6},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours7},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours8},
-                        new KaboomCellModel {State = KaboomCellState.Mine},
-                        new KaboomCellModel {State = KaboomCellState.Flagged}
-                    },
-                    new ObservableCollection<KaboomCellModel>
-                    {
-                        new KaboomCellModel {State = KaboomCellState.Neighbours1},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours2},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours3},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours4},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours5},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours6},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours7},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours8},
-                        new KaboomCellModel {State = KaboomCellState.Mine},
-                        new KaboomCellModel {State = KaboomCellState.Flagged}
-                    },
-                    new ObservableCollection<KaboomCellModel>
-                    {
-                        new KaboomCellModel {State = KaboomCellState.Neighbours1},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours2},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours3},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours4},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours5},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours6},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours7},
-                        new KaboomCellModel {State = KaboomCellState.Neighbours8},
-                        new KaboomCellModel {State = KaboomCellState.Mine},
-                        new KaboomCellModel {State = KaboomCellState.Flagged}
-                    },
-                    new ObservableCollection<KaboomCellModel>
-                    {
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed},
-                        new KaboomCellModel {State = KaboomCellState.Closed}
-                    }
-                }
-            };
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed}
+            });
+            Board.Cells.Add(new ObservableCollection<KaboomCellModel>
+            {
+                new KaboomCellModel {State = KaboomCellState.Empty},
+                new KaboomCellModel {State = KaboomCellState.Empty},
+                new KaboomCellModel {State = KaboomCellState.Empty},
+                new KaboomCellModel {State = KaboomCellState.Empty},
+                new KaboomCellModel {State = KaboomCellState.Empty},
+                new KaboomCellModel {State = KaboomCellState.Empty},
+                new KaboomCellModel {State = KaboomCellState.Empty},
+                new KaboomCellModel {State = KaboomCellState.Empty},
+                new KaboomCellModel {State = KaboomCellState.Empty},
+                new KaboomCellModel {State = KaboomCellState.Empty}
+            });
+            Board.Cells.Add(new ObservableCollection<KaboomCellModel>
+            {
+                new KaboomCellModel {State = KaboomCellState.Neighbours1},
+                new KaboomCellModel {State = KaboomCellState.Neighbours2},
+                new KaboomCellModel {State = KaboomCellState.Neighbours3},
+                new KaboomCellModel {State = KaboomCellState.Neighbours4},
+                new KaboomCellModel {State = KaboomCellState.Neighbours5},
+                new KaboomCellModel {State = KaboomCellState.Neighbours6},
+                new KaboomCellModel {State = KaboomCellState.Neighbours7},
+                new KaboomCellModel {State = KaboomCellState.Neighbours8},
+                new KaboomCellModel {State = KaboomCellState.Mine},
+                new KaboomCellModel {State = KaboomCellState.Flagged}
+            });
+            Board.Cells.Add(new ObservableCollection<KaboomCellModel>
+            {
+                new KaboomCellModel {State = KaboomCellState.Neighbours1},
+                new KaboomCellModel {State = KaboomCellState.Neighbours2},
+                new KaboomCellModel {State = KaboomCellState.Neighbours3},
+                new KaboomCellModel {State = KaboomCellState.Neighbours4},
+                new KaboomCellModel {State = KaboomCellState.Neighbours5},
+                new KaboomCellModel {State = KaboomCellState.Neighbours6},
+                new KaboomCellModel {State = KaboomCellState.Neighbours7},
+                new KaboomCellModel {State = KaboomCellState.Neighbours8},
+                new KaboomCellModel {State = KaboomCellState.Mine},
+                new KaboomCellModel {State = KaboomCellState.Flagged}
+            });
+            Board.Cells.Add(new ObservableCollection<KaboomCellModel>
+            {
+                new KaboomCellModel {State = KaboomCellState.Neighbours1},
+                new KaboomCellModel {State = KaboomCellState.Neighbours2},
+                new KaboomCellModel {State = KaboomCellState.Neighbours3},
+                new KaboomCellModel {State = KaboomCellState.Neighbours4},
+                new KaboomCellModel {State = KaboomCellState.Neighbours5},
+                new KaboomCellModel {State = KaboomCellState.Neighbours6},
+                new KaboomCellModel {State = KaboomCellState.Neighbours7},
+                new KaboomCellModel {State = KaboomCellState.Neighbours8},
+                new KaboomCellModel {State = KaboomCellState.Mine},
+                new KaboomCellModel {State = KaboomCellState.Flagged}
+            });
+            Board.Cells.Add(new ObservableCollection<KaboomCellModel>
+            {
+                new KaboomCellModel {State = KaboomCellState.Neighbours1},
+                new KaboomCellModel {State = KaboomCellState.Neighbours2},
+                new KaboomCellModel {State = KaboomCellState.Neighbours3},
+                new KaboomCellModel {State = KaboomCellState.Neighbours4},
+                new KaboomCellModel {State = KaboomCellState.Neighbours5},
+                new KaboomCellModel {State = KaboomCellState.Neighbours6},
+                new KaboomCellModel {State = KaboomCellState.Neighbours7},
+                new KaboomCellModel {State = KaboomCellState.Neighbours8},
+                new KaboomCellModel {State = KaboomCellState.Mine},
+                new KaboomCellModel {State = KaboomCellState.Flagged}
+            });
+            Board.Cells.Add(new ObservableCollection<KaboomCellModel>
+            {
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed},
+                new KaboomCellModel {State = KaboomCellState.Closed}
+            });
+
             MainWindow = new MainWindowModel {Board = Board};
         }
-}
+    }
 }

@@ -21,11 +21,10 @@ namespace Com.Revo.Games.KaboomEngine {
         }
         public KaboomEngineState Open(int x, int y)
         {
-            if (State == KaboomEngineState.Solved) throw new InvalidOperationException("This board has already been solved.");
-            if (State == KaboomEngineState.Exploded) throw new InvalidOperationException("This board is already exploded.");
+            if (State != KaboomEngineState.Sweeping) return State;
 
             var cell = (KaboomCell)cells[x, y];
-            if (cell.IsOpen) throw new ArgumentException($"The cell at ({x}, {y}) has already been opened.");
+            if (cell.IsOpen) return State;
 
             if (cell.IsMine)
             {

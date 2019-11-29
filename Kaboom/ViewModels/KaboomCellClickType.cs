@@ -2,7 +2,6 @@
     public enum KaboomCellClickType
     {
         Left,
-        Right,
-        Double
+        Right
     }
 }

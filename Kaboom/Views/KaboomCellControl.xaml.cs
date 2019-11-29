@@ -12,7 +12,7 @@ namespace Com.Revo.Games.Kaboom.Views
         public static readonly DependencyProperty CellClickedProperty =
             DependencyProperty.Register(nameof(CellClicked), typeof(ICommand), typeof(KaboomCellControl), new UIPropertyMetadata(null));
 
-        KaboomCellClickEventArgs leftClickArgs, rightClickArgs, doubleClickArgs;
+        KaboomCellClickEventArgs leftClickArgs, rightClickArgs;
 
         public ICommand CellClicked
         {
@@ -25,7 +25,6 @@ namespace Com.Revo.Games.Kaboom.Views
             {
                 leftClickArgs = new KaboomCellClickEventArgs(e.NewValue as KaboomCellModel, KaboomCellClickType.Left);
                 rightClickArgs = new KaboomCellClickEventArgs(e.NewValue as KaboomCellModel, KaboomCellClickType.Right);
-                doubleClickArgs = new KaboomCellClickEventArgs(e.NewValue as KaboomCellModel, KaboomCellClickType.Double);
             };
             InitializeComponent();
         }
@@ -34,13 +33,6 @@ namespace Com.Revo.Games.Kaboom.Views
             var command = CellClicked;
             if (command?.CanExecute(e) == true)
                 command.Execute(e);
-        }
-        protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
-        {
-            base.OnMouseDoubleClick(e);
-            if (e.ChangedButton != MouseButton.Left) return;
-            e.Handled = true;
-            RaiseCellClickedEvent(doubleClickArgs);
         }
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {

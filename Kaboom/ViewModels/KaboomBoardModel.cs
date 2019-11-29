@@ -59,20 +59,29 @@ namespace Com.Revo.Games.Kaboom.ViewModels {
                         engine.Open(e.ClickedCell.X, e.ClickedCell.Y);
                     break;
                 default:
-                    if (e?.ClickType != KaboomCellClickType.Double) return;
-                    OpenWherePossible(e.ClickedCell);
+                    if (e?.ClickType != KaboomCellClickType.Left) return;
+                    OpenWherePossible();
                     break;
             }
 
             UpdateCellStates();
         }
-        private void OpenWherePossible(KaboomCellModel cell)
+        private void OpenWherePossible()
         {
-            var adjacentCells = engine.GetCellsAdjacentTo(cell.X, cell.Y).Select(c => Cells[c.y][c.x]).ToArray();
-            if (adjacentCells.Count(c => c.State == KaboomCellState.Flagged) != cell.AdjacentMines) return;
+            start:
 
-            foreach (var c in adjacentCells.Where(c => c.State == KaboomCellState.Closed))
-                engine.Open(c.X, c.Y);
+            var openableCells = Enumerable.Range(0, engine.Width)
+                                          .SelectMany(x => Enumerable.Range(0, engine.Height).Select(y => engine.Cells[x, y]))
+                                          .Where(cell => cell.IsOpen && cell.AdjacentMines > 0)
+                                          .Select(cell => new {cell, neighbours = engine.GetCellsAdjacentTo(cell.X, cell.Y).Select(c => Cells[c.y][c.x]).ToArray()})
+                                          .Where(x => x.neighbours.Count(neighbour => neighbour.State == KaboomCellState.Flagged) == x.cell.AdjacentMines)
+                                          .SelectMany(x => x.neighbours.Where(neighbour => neighbour.State != KaboomCellState.Flagged && !engine.Cells[neighbour.X, neighbour.Y].IsOpen))
+                                          .Select(neighbour => (neighbour.X, neighbour.Y))
+                                          .Distinct()
+                                          .ToList();
+            if (openableCells.Count == 0) return;
+            openableCells.ForEach(c => engine.Open(c.X, c.Y));
+            goto start;
         }
         private void UpdateCellStates()
         {

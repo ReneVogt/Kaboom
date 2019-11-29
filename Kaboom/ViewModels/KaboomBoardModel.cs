@@ -35,8 +35,7 @@ namespace Com.Revo.Games.Kaboom.ViewModels {
             }
 
             Cells = cells;
-            OnPropertyChanged(nameof(Cells));
-
+            
             CellClickedCommand = new CustomCommand<KaboomCellClickEventArgs>(OnCellClicked);
         }
 
@@ -60,7 +59,7 @@ namespace Com.Revo.Games.Kaboom.ViewModels {
                         engine.Open(e.ClickedCell.X, e.ClickedCell.Y);
                     break;
                 default:
-                    if (e?.ClickType != KaboomCellClickType.Both) return;
+                    if (e?.ClickType != KaboomCellClickType.Double) return;
                     OpenWherePossible(e.ClickedCell);
                     break;
             }

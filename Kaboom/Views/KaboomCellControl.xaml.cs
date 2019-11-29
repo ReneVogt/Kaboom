@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using Com.Revo.Games.Kaboom.ViewModels;
 
@@ -13,6 +12,8 @@ namespace Com.Revo.Games.Kaboom.Views
         public static readonly DependencyProperty CellClickedProperty =
             DependencyProperty.Register(nameof(CellClicked), typeof(ICommand), typeof(KaboomCellControl), new UIPropertyMetadata(null));
 
+        KaboomCellClickEventArgs leftClickArgs, rightClickArgs, doubleClickArgs;
+
         public ICommand CellClicked
         {
             get => (ICommand)GetValue(CellClickedProperty);
@@ -20,36 +21,33 @@ namespace Com.Revo.Games.Kaboom.Views
         }
         public KaboomCellControl()
         {
+            DataContextChanged += (sender, e) =>
+            {
+                leftClickArgs = new KaboomCellClickEventArgs(e.NewValue as KaboomCellModel, KaboomCellClickType.Left);
+                rightClickArgs = new KaboomCellClickEventArgs(e.NewValue as KaboomCellModel, KaboomCellClickType.Right);
+                doubleClickArgs = new KaboomCellClickEventArgs(e.NewValue as KaboomCellModel, KaboomCellClickType.Double);
+            };
             InitializeComponent();
         }
-        private void RaiseCellClickedEvent(KaboomCellClickType type)
+        private void RaiseCellClickedEvent(KaboomCellClickEventArgs e)
         {
             var command = CellClicked;
-            var e = new KaboomCellClickEventArgs(DataContext as KaboomCellModel, type);
             if (command?.CanExecute(e) == true)
                 command.Execute(e);
         }
-        bool clickEventRaised;
-        protected override async void OnMouseUp(MouseButtonEventArgs e)
+        protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
+        {
+            base.OnMouseDoubleClick(e);
+            if (e.ChangedButton != MouseButton.Left) return;
+            e.Handled = true;
+            RaiseCellClickedEvent(doubleClickArgs);
+        }
+        protected override void OnMouseUp(MouseButtonEventArgs e)
         {
             base.OnMouseUp(e);
-            if (clickEventRaised) return;
-            clickEventRaised = true;
-            switch (e.ChangedButton)
-            {
-                case MouseButton.Left:
-                    RaiseCellClickedEvent(e.RightButton == MouseButtonState.Pressed ? KaboomCellClickType.Both : KaboomCellClickType.Left);
-                    break;
-                case MouseButton.Right:
-                    RaiseCellClickedEvent(e.LeftButton == MouseButtonState.Pressed ? KaboomCellClickType.Both : KaboomCellClickType.Right);
-                    break;
-                default:
-                    return;
-            }
-
+            if (e.ChangedButton != MouseButton.Left && e.ChangedButton != MouseButton.Right) return;
             e.Handled = true;
-            await Task.Delay(250);
-            clickEventRaised = false;
+            RaiseCellClickedEvent(e.ChangedButton == MouseButton.Left ? leftClickArgs : rightClickArgs);
         }
     }
 }

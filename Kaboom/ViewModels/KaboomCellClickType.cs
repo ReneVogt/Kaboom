@@ -3,6 +3,6 @@
     {
         Left,
         Right,
-        Both
+        Double
     }
 }

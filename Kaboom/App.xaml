@@ -3,17 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
-        <BitmapImage x:Key="ImgClosed" UriSource="Icons/tile.ico"/>
-        <BitmapImage x:Key="ImgFlagged" UriSource="Icons/flag.ico"/>
-        <BitmapImage x:Key="ImgEmpty" UriSource="Icons/empty.ico"/>
-        <BitmapImage x:Key="ImgMine" UriSource="Icons/mine.ico"/>
-        <BitmapImage x:Key="ImgOne" UriSource="Icons/one.ico"/>
-        <BitmapImage x:Key="ImgTwo" UriSource="Icons/two.ico"/>
-        <BitmapImage x:Key="ImgThree" UriSource="Icons/three.ico"/>
-        <BitmapImage x:Key="ImgFour" UriSource="Icons/four.ico"/>
-        <BitmapImage x:Key="ImgFive" UriSource="Icons/five.ico"/>
-        <BitmapImage x:Key="ImgSix" UriSource="Icons/six.ico"/>
-        <BitmapImage x:Key="ImgSeven" UriSource="Icons/seven.ico"/>
-        <BitmapImage x:Key="ImgEight" UriSource="Icons/eight.ico"/>
+        <BitmapImage x:Key="ImgClosed" UriSource="Icons/tile.ico" x:Shared="True"/>
+        <BitmapImage x:Key="ImgFlagged" UriSource="Icons/flag.ico" x:Shared="True"/>
+        <BitmapImage x:Key="ImgEmpty" UriSource="Icons/empty.ico" x:Shared="True"/>
+        <BitmapImage x:Key="ImgMine" UriSource="Icons/mine.ico" x:Shared="True"/>
+        <BitmapImage x:Key="ImgOne" UriSource="Icons/one.ico" x:Shared="True"/>
+        <BitmapImage x:Key="ImgTwo" UriSource="Icons/two.ico" x:Shared="True"/>
+        <BitmapImage x:Key="ImgThree" UriSource="Icons/three.ico" x:Shared="True"/>
+        <BitmapImage x:Key="ImgFour" UriSource="Icons/four.ico" x:Shared="True"/>
+        <BitmapImage x:Key="ImgFive" UriSource="Icons/five.ico" x:Shared="True"/>
+        <BitmapImage x:Key="ImgSix" UriSource="Icons/six.ico" x:Shared="True"/>
+        <BitmapImage x:Key="ImgSeven" UriSource="Icons/seven.ico" x:Shared="True"/>
+        <BitmapImage x:Key="ImgEight" UriSource="Icons/eight.ico" x:Shared="True"/>
     </Application.Resources>
 </Application>

@@ -4,14 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:DesignData="clr-namespace:Com.Revo.Games.Kaboom.DesignerSampleData"
+             xmlns:ViewModels="clr-namespace:Com.Revo.Games.Kaboom.ViewModels"
              xmlns:Views="clr-namespace:Com.Revo.Games.Kaboom.Views"
              mc:Ignorable="d" 
              d:DataContext="{x:Static DesignData:SampleData.Board}">
-        <Border BorderBrush="Black" BorderThickness="1" Background="White">
+    <Border BorderBrush="Black" BorderThickness="1" Background="White">
         <Border.Resources>
-            <DataTemplate x:Key="CellTemplate">
+            <DataTemplate x:Key="CellTemplate" DataType="{x:Type ViewModels:KaboomCellModel}">
                 <Border BorderBrush="LightGray" BorderThickness="1">
-                    <Views:KaboomCellControl Content="{Binding}" Margin="0" Padding="0" CellClicked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:KaboomBoardControl}}, Path=DataContext.CellClickedCommand}"/>
+                    <Views:KaboomCellControl Content="{Binding}" Margin="0" Padding="0" 
+                                             CellClicked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:KaboomBoardControl}}, Path=DataContext.CellClickedCommand}"/>
                 </Border>
             </DataTemplate>
             <DataTemplate x:Key="RowTemplate">
@@ -27,5 +29,5 @@
         <ItemsControl ItemTemplate="{DynamicResource RowTemplate}" ItemsSource="{Binding Cells}" 
                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Border>
+    </Border>
 </UserControl>

@@ -116,7 +116,7 @@ namespace Com.Revo.Games.Kaboom.DesignerSampleData
                 new KaboomCellModel {State = KaboomCellState.Closed}
             });
 
-            MainWindow = new MainWindowModel {Board = Board};
+            MainWindow = new MainWindowModel { Board = Board };
         }
     }
 }

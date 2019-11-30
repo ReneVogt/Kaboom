@@ -57,6 +57,7 @@
     <Compile Include="Cell.cs" />
     <Compile Include="CellCollection.cs" />
     <Compile Include="FieldState.cs" />
+    <Compile Include="KaboomField.cs" />
     <Compile Include="MinesweeperField.cs" />
     <Compile Include="IKaboomField.cs" />
     <Compile Include="KaboomFieldExtensions.cs" />

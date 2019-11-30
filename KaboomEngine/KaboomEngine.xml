@@ -182,5 +182,15 @@
             <returns>A fresh Kaboom field with the specified configuration and a default Minesweeper behaviour.</returns>
             <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="width"/> and <paramref name="height"/> must be between 1 and 1000 and the number of mines cannot exceed the number of cells.</exception>
         </member>
+        <member name="M:Com.Revo.Games.KaboomEngine.KaboomFieldProvider.CreateKaboomField(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Provides an <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomField"/> using the Kaboom behaviour (you lose when you guess, but you won't fail if you're forced to guess).
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="numberOfMines"></param>
+            <returns>A fresh Kaboom field with the specified configuration.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="width"/> and <paramref name="height"/> must be between 1 and 1000 and the number of mines cannot exceed the number of cells.</exception>
+        </member>
     </members>
 </doc>

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Com.Revo.Games.KaboomEngine 
 {
-    internal sealed class MinesweeperField : IKaboomField
+    sealed class MinesweeperField : IKaboomField
     {
         FieldState state = FieldState.Sweeping;
         static readonly Random random = new Random();
@@ -40,14 +40,9 @@ namespace Com.Revo.Games.KaboomEngine
             Height = height;
             NumberOfMines = numberOfMines;
 
-            Cells = new CellCollection(Width, Height);
-            for (int x = 0; x < Width; x++)
-            for (int y = 0; y < Height; y++)
-            {
-                var cell = new Cell(this, x, y);
-                Cells[x, y] = cell;
+            Cells = new CellCollection(this, Width, Height);
+            foreach(var cell in Cells)
                 cell.CellChanged += (sender, e) => StateChanged?.Invoke(this, e);
-            }
 
             HashSet<(int x, int y)> used = new HashSet<(int x, int y)>();
 

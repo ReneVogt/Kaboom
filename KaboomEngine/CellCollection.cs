@@ -11,7 +11,11 @@ namespace Com.Revo.Games.KaboomEngine {
     public sealed class CellCollection : IEnumerable<Cell>
     {
         readonly Cell[][] cells;
-        internal CellCollection(int x, int y) => cells = Enumerable.Range(0, x).Select(i => new Cell[y]).ToArray();
+        internal CellCollection(IKaboomField field, int width, int height) => cells = Enumerable.Range(0, width)
+                                                                            .Select(x => Enumerable.Range(0, height)
+                                                                                                   .Select(y => new Cell(field, x, y))
+                                                                                                   .ToArray())
+                                                                            .ToArray();
 
         /// <summary>
         /// Gets the Kaboom cell at the specified coordinates.
@@ -20,11 +24,7 @@ namespace Com.Revo.Games.KaboomEngine {
         /// <param name="y">The x-coordinate of the cell.</param>
         /// <returns>The cell (<see cref="Cell"/> at the specified location.</returns>
         /// <exception cref="IndexOutOfRangeException">The <paramref name="x"/>- and/or <paramref name="y"/>-coordinate are outside the bounds of this field.</exception>
-        public Cell this[int x, int y]
-        {
-            get => cells[x][y];
-            internal set => cells[x][y] = value;
-        }
+        public Cell this[int x, int y] => cells[x][y];
 
         /// <inheritdoc />
         public IEnumerator<Cell> GetEnumerator() => cells.SelectMany(column => column).GetEnumerator();

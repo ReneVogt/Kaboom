@@ -3,11 +3,11 @@
 namespace Com.Revo.Games.KaboomEngine
 {
     /// <summary>
-    /// Represents a cell on a Kaboom field.
+    /// Represents a cell on a Kaboom minesweeperField.
     /// </summary>
     public sealed class Cell
     {
-        readonly Field field;
+        readonly IKaboomField field;
         bool flagged;
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Com.Revo.Games.KaboomEngine
         /// Tells if this cell contains a mine.
         /// This property is only valid if the cell has
         /// already been uncovered (hence <see cref="IsOpen"/> is <code>true</code>)
-        /// or the containing field's <see cref="Field.State"/> is no longer <see cref="FieldState.Sweeping"/>.
+        /// or the containing minesweeperField's <see cref="IKaboomField.State"/> is no longer <see cref="FieldState.Sweeping"/>.
         /// </summary>
         public bool IsMine { get; internal set; }
         /// <summary>
@@ -54,7 +54,7 @@ namespace Com.Revo.Games.KaboomEngine
         /// </summary>
         public event EventHandler CellChanged;
 
-        internal Cell(Field field, int x, int y)
+        internal Cell(IKaboomField field, int x, int y)
         {
             X = x;
             Y = y;
@@ -73,8 +73,8 @@ namespace Com.Revo.Games.KaboomEngine
 
         /// <summary>
         /// Uncovers this cell.
-        /// This call is delegated to the <see cref="Field.Uncover(int,int)"/> method of the
-        /// <see cref="Field"/> owning this cell. See there for what may happen if
+        /// This call is delegated to the <see cref="IKaboomField.Uncover(int,int)"/> method of the
+        /// <see cref="IKaboomField"/> owning this cell. See there for what may happen if
         /// this method is called.
         /// </summary>
         public void Uncover()

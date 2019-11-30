@@ -6,7 +6,7 @@
     <members>
         <member name="T:Com.Revo.Games.KaboomEngine.Cell">
             <summary>
-            Represents a cell on a Kaboom field.
+            Represents a cell on a Kaboom minesweeperField.
             </summary>
         </member>
         <member name="P:Com.Revo.Games.KaboomEngine.Cell.X">
@@ -31,7 +31,7 @@
             Tells if this cell contains a mine.
             This property is only valid if the cell has
             already been uncovered (hence <see cref="P:Com.Revo.Games.KaboomEngine.Cell.IsOpen"/> is <code>true</code>)
-            or the containing field's <see cref="P:Com.Revo.Games.KaboomEngine.Field.State"/> is no longer <see cref="F:Com.Revo.Games.KaboomEngine.FieldState.Sweeping"/>.
+            or the containing minesweeperField's <see cref="P:Com.Revo.Games.KaboomEngine.IKaboomField.State"/> is no longer <see cref="F:Com.Revo.Games.KaboomEngine.FieldState.Sweeping"/>.
             </summary>
         </member>
         <member name="P:Com.Revo.Games.KaboomEngine.Cell.IsOpen">
@@ -53,8 +53,8 @@
         <member name="M:Com.Revo.Games.KaboomEngine.Cell.Uncover">
             <summary>
             Uncovers this cell.
-            This call is delegated to the <see cref="M:Com.Revo.Games.KaboomEngine.Field.Uncover(System.Int32,System.Int32)"/> method of the
-            <see cref="T:Com.Revo.Games.KaboomEngine.Field"/> owning this cell. See there for what may happen if
+            This call is delegated to the <see cref="M:Com.Revo.Games.KaboomEngine.IKaboomField.Uncover(System.Int32,System.Int32)"/> method of the
+            <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomField"/> owning this cell. See there for what may happen if
             this method is called.
             </summary>
         </member>
@@ -81,7 +81,7 @@
         </member>
         <member name="T:Com.Revo.Games.KaboomEngine.FieldState">
             <summary>
-            Represents the state of a Kaboom field (<see cref="T:Com.Revo.Games.KaboomEngine.Field"/>).
+            Represents the state of a Kaboom field (<see cref="T:Com.Revo.Games.KaboomEngine.IKaboomField"/>).
             </summary>
         </member>
         <member name="F:Com.Revo.Games.KaboomEngine.FieldState.Sweeping">
@@ -99,51 +99,42 @@
             The field is exploded.
             </summary>
         </member>
-        <member name="T:Com.Revo.Games.KaboomEngine.Field">
+        <member name="T:Com.Revo.Games.KaboomEngine.IKaboomField">
             <summary>
-            Represents a Kaboom mine field.
+            Represents a Kaboom game field.
             </summary>
         </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.Field.Width">
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomField.Width">
             <summary>
             The width of this Kaboom field.
             </summary>
         </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.Field.Height">
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomField.Height">
             <summary>
             The height of this Kaboom field.
             </summary>
         </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.Field.NumberOfMines">
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomField.NumberOfMines">
             <summary>
             Number of mines on this Kaboom field.
             </summary>
         </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.Field.Cells">
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomField.Cells">
             <summary>
             The cells of this Kaboom field.
             </summary>
         </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.Field.State">
+        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomField.State">
             <summary>
             The state of this Kaboom field.
             </summary>
         </member>
-        <member name="E:Com.Revo.Games.KaboomEngine.Field.StateChanged">
+        <member name="E:Com.Revo.Games.KaboomEngine.IKaboomField.StateChanged">
             <summary>
             Raised if the state of this field has changed.
             </summary>
         </member>
-        <member name="M:Com.Revo.Games.KaboomEngine.Field.#ctor(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Creates a new Kaboom field of the specified size
-            and containing the specified number of mines.
-            </summary>
-            <param name="width">The width of the field to create.</param>
-            <param name="height">The height of the field to create.</param>
-            <param name="numberOfMines">The number of mines the field should contain.</param>
-        </member>
-        <member name="M:Com.Revo.Games.KaboomEngine.Field.Uncover(System.Int32,System.Int32)">
+        <member name="M:Com.Revo.Games.KaboomEngine.IKaboomField.Uncover(System.Int32,System.Int32)">
             <summary>
             Uncovers cells depending on the state of the cell at the specified location.
             If the cell is closed and flagged, nothing will happen.
@@ -159,15 +150,37 @@
             <param name="y">The y-coordinate of the cell to uncover.</param>
             <exception cref="T:System.IndexOutOfRangeException">The <paramref name="x"/>- and/or <paramref name="y"/>-coordinate was outside the bounds of this field.</exception>
         </member>
-        <member name="M:Com.Revo.Games.KaboomEngine.Field.GetCoordinatesAdjacentTo(System.Int32,System.Int32)">
+        <member name="T:Com.Revo.Games.KaboomEngine.KaboomFieldExtensions">
+            <summary>
+            Provides extension methods for the <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomField"/> interface.
+            </summary>
+        </member>
+        <member name="M:Com.Revo.Games.KaboomEngine.KaboomFieldExtensions.GetCoordinatesAdjacentTo(Com.Revo.Games.KaboomEngine.IKaboomField,System.Int32,System.Int32)">
             <summary>
             Enumerates the coordinates of the cells adjacent to the cell with the
             specified coordinates.
             </summary>
+            <param name="field">The <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomField"/> to work on.</param>
             <param name="x">The x-coordinate of the current cell.</param>
             <param name="y">The y-coordinate of the current cell.</param>
             <returns>An enumeration of the coordinates of the cells adjacent to the specified cell.</returns>
-            <exception cref="T:System.IndexOutOfRangeException">The specified cell is outside the engine.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="field"/> cannot be <code>null</code>.</exception>
+            <exception cref="T:System.IndexOutOfRangeException">The specified cell is outside the field.</exception>
+        </member>
+        <member name="T:Com.Revo.Games.KaboomEngine.KaboomFieldProvider">
+            <summary>
+            A static provider for for Kaboom fields (of type <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomField"/>.
+            </summary>
+        </member>
+        <member name="M:Com.Revo.Games.KaboomEngine.KaboomFieldProvider.CreateMinesweeperField(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Provides an <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomField"/> using a standard Minesweeper behaviour.
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="numberOfMines"></param>
+            <returns>A fresh Kaboom field with the specified configuration and a default Minesweeper behaviour.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="width"/> and <paramref name="height"/> must be between 1 and 1000 and the number of mines cannot exceed the number of cells.</exception>
         </member>
     </members>
 </doc>

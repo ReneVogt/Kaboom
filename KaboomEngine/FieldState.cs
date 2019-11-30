@@ -1,19 +1,20 @@
-﻿namespace Com.Revo.Games.KaboomEngine {
+﻿namespace Com.Revo.Games.KaboomEngine 
+{
     /// <summary>
-    /// Describes a Kaboom board state.
+    /// Represents the state of a Kaboom field (<see cref="Field"/>).
     /// </summary>
-    public enum KaboomEngineState
+    public enum FieldState
     {
         /// <summary>
         /// Sweeping is in progress.
         /// </summary>
         Sweeping,
         /// <summary>
-        /// The board is solved.
+        /// The field has been solved.
         /// </summary>
         Solved,
         /// <summary>
-        /// The board exploded by opening a mine cell.
+        /// The field is exploded.
         /// </summary>
         Exploded
     }

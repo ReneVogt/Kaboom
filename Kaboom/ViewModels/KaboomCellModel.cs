@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Com.Revo.Games.Kaboom.ViewModels.Com.Aki.WpfCommons.Bindings;
 using Com.Revo.Games.KaboomEngine;
 using JetBrains.Annotations;
 
@@ -7,30 +9,35 @@ namespace Com.Revo.Games.Kaboom.ViewModels
 {
     public class KaboomCellModel : INotifyPropertyChanged
     {
-        public int X { get; }
-        public int Y { get; }
-        public int AdjacentMines { get; }
+        readonly Cell cell;
+        public int X => cell.X;
+        public int Y => cell.Y;
+        public int AdjacentMines => cell.AdjacentMines;
+        public CustomCommand<KaboomCellClickType> ClickCommand { get; }
 
-        KaboomCellState state;
-        public KaboomCellState State
-        {
-            get => state;
-            set
-            {
-                if (value == state)
-                    return;
-                state = value;
-                OnPropertyChanged();
-            }
-        }
+        public KaboomCellState State =>
+            cell.IsOpen
+                ? cell.IsMine
+                      ? KaboomCellState.Mine
+                      : KaboomCellState.Open
+                : cell.IsFlagged
+                    ? KaboomCellState.Flagged
+                    : KaboomCellState.Closed;
 
         public KaboomCellModel()
             : this(null) { }
-        public KaboomCellModel(IKaboomCell cell)
+        public KaboomCellModel([NotNull] Cell cell)
         {
-            X = cell?.X ?? -1;
-            Y = cell?.Y ?? -1;
-            AdjacentMines = cell?.AdjacentMines ?? 0;
+            this.cell = cell ?? throw new ArgumentNullException(nameof(cell));
+            this.cell.CellChanged += (sender, e) => OnPropertyChanged(nameof(State));
+            ClickCommand = new CustomCommand<KaboomCellClickType>(OnClicked);
+        }
+        private void OnClicked(KaboomCellClickType clickType)
+        {
+            if (clickType == KaboomCellClickType.Left)
+                cell.Uncover();
+            else
+                cell.IsFlagged = !cell.IsFlagged;
         }
         public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChangedInvocator]

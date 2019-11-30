@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace Com.Revo.Games.Kaboom.ViewModels
 {
-    public class MainWindowModel : MarkupExtension, INotifyPropertyChanged
+    public sealed class MainWindowModel : MarkupExtension, INotifyPropertyChanged
     {
         KaboomBoardModel board;
         public CustomCommand BeginnerCommand { get; }
@@ -53,7 +53,7 @@ namespace Com.Revo.Games.Kaboom.ViewModels
         }
         public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

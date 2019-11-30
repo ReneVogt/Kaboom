@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:DesignData="clr-namespace:Com.Revo.Games.Kaboom.DesignerSampleData"
              mc:Ignorable="d" 
-             d:DataContext="{x:Static DesignData:SampleData.CellOne}">
+             d:DataContext="{x:Static DesignData:SampleData.Cell}">
         <Image Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center"
                Margin="1,1,1,1"
                Stretch="Fill">
@@ -16,39 +16,75 @@
                     <DataTrigger Binding="{Binding State}" Value="Closed">
                         <Setter Property="Source" Value="{StaticResource ImgClosed}"/>
                     </DataTrigger>
-                    <DataTrigger Binding="{Binding State}" Value="Empty">
-                        <Setter Property="Source" Value="{StaticResource ImgEmpty}"/>
-                    </DataTrigger>
                     <DataTrigger Binding="{Binding State}" Value="Mine">
                         <Setter Property="Source" Value="{StaticResource ImgMine}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding State}" Value="Flagged">
                         <Setter Property="Source" Value="{StaticResource ImgFlagged}"/>
                     </DataTrigger>
-                    <DataTrigger Binding="{Binding State}" Value="Neighbours1">
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding State}" Value="Open"/>
+                            <Condition Binding="{Binding AdjacentMines}" Value="0"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Source" Value="{StaticResource ImgEmpty}"/>
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding State}" Value="Open"/>
+                            <Condition Binding="{Binding AdjacentMines}" Value="1"/>
+                        </MultiDataTrigger.Conditions>
                         <Setter Property="Source" Value="{StaticResource ImgOne}"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding State}" Value="Neighbours2">
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding State}" Value="Open"/>
+                            <Condition Binding="{Binding AdjacentMines}" Value="2"/>
+                        </MultiDataTrigger.Conditions>
                         <Setter Property="Source" Value="{StaticResource ImgTwo}"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding State}" Value="Neighbours3">
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding State}" Value="Open"/>
+                            <Condition Binding="{Binding AdjacentMines}" Value="3"/>
+                        </MultiDataTrigger.Conditions>
                         <Setter Property="Source" Value="{StaticResource ImgThree}"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding State}" Value="Neighbours4">
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding State}" Value="Open"/>
+                            <Condition Binding="{Binding AdjacentMines}" Value="4"/>
+                        </MultiDataTrigger.Conditions>
                         <Setter Property="Source" Value="{StaticResource ImgFour}"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding State}" Value="Neighbours5">
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding State}" Value="Open"/>
+                            <Condition Binding="{Binding AdjacentMines}" Value="5"/>
+                        </MultiDataTrigger.Conditions>
                         <Setter Property="Source" Value="{StaticResource ImgFive}"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding State}" Value="Neighbours6">
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding State}" Value="Open"/>
+                            <Condition Binding="{Binding AdjacentMines}" Value="6"/>
+                        </MultiDataTrigger.Conditions>
                         <Setter Property="Source" Value="{StaticResource ImgSix}"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding State}" Value="Neighbours7">
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding State}" Value="Open"/>
+                            <Condition Binding="{Binding AdjacentMines}" Value="7"/>
+                        </MultiDataTrigger.Conditions>
                         <Setter Property="Source" Value="{StaticResource ImgSeven}"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding State}" Value="Neighbours8">
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding State}" Value="Open"/>
+                            <Condition Binding="{Binding AdjacentMines}" Value="8"/>
+                        </MultiDataTrigger.Conditions>
                         <Setter Property="Source" Value="{StaticResource ImgEight}"/>
-                    </DataTrigger>
+                    </MultiDataTrigger>
                 </Style.Triggers>
             </Style>
             </Image.Style>

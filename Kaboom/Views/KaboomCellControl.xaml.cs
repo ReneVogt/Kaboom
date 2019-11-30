@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Com.Revo.Games.Kaboom.ViewModels;
 
 namespace Com.Revo.Games.Kaboom.Views
@@ -9,37 +8,26 @@ namespace Com.Revo.Games.Kaboom.Views
     /// </summary>
     public sealed partial class KaboomCellControl
     {
-        public static readonly DependencyProperty CellClickedProperty =
-            DependencyProperty.Register(nameof(CellClicked), typeof(ICommand), typeof(KaboomCellControl), new UIPropertyMetadata(null));
-
-        KaboomCellClickEventArgs leftClickArgs, rightClickArgs;
-
-        public ICommand CellClicked
-        {
-            get => (ICommand)GetValue(CellClickedProperty);
-            set => SetValue(CellClickedProperty, value);
-        }
         public KaboomCellControl()
         {
-            DataContextChanged += (sender, e) =>
-            {
-                leftClickArgs = new KaboomCellClickEventArgs(e.NewValue as KaboomCellModel, KaboomCellClickType.Left);
-                rightClickArgs = new KaboomCellClickEventArgs(e.NewValue as KaboomCellModel, KaboomCellClickType.Right);
-            };
             InitializeComponent();
         }
-        private void RaiseCellClickedEvent(KaboomCellClickEventArgs e)
+        private void RaiseCellClickedEvent(KaboomCellClickType clickType)
         {
-            var command = CellClicked;
-            if (command?.CanExecute(e) == true)
-                command.Execute(e);
+            if (!(DataContext is KaboomCellModel model)) return;
+            var command = model.ClickCommand;
+            if (command?.CanExecute(clickType) == true)
+                command.Execute(clickType);
         }
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
             base.OnMouseUp(e);
+
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse because FxCop claims to know better
+            if (e == null) return;
             if (e.ChangedButton != MouseButton.Left && e.ChangedButton != MouseButton.Right) return;
             e.Handled = true;
-            RaiseCellClickedEvent(e.ChangedButton == MouseButton.Left ? leftClickArgs : rightClickArgs);
+            RaiseCellClickedEvent(e.ChangedButton == MouseButton.Left ? KaboomCellClickType.Left: KaboomCellClickType.Right);
         }
     }
 }

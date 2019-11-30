@@ -20,7 +20,7 @@
             <Button Command="{Binding ExpertCommand}" Padding="2" Margin="2">XXX</Button>
             <Button Command="{Binding UserDefinedCommand}" Padding="2" Margin="2">Custom...</Button>
         </StackPanel>
-        <Label DockPanel.Dock="Bottom" Content="{Binding Board.EngineState, Mode=OneWay}" Margin="4,2,4,2"/>
+        <Label DockPanel.Dock="Bottom" Content="{Binding Board.State, Mode=OneWay}" Margin="4,2,4,2"/>
         <Views:KaboomBoardControl Margin="4,0,4,0" DataContext="{Binding Board, Mode=OneWay}"/>
     </DockPanel>
 </Window>

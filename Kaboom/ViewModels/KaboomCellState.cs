@@ -2,16 +2,8 @@
     public enum KaboomCellState
     {
         Closed,
-        Empty,
+        Open,
         Mine,
-        Flagged,
-        Neighbours1,
-        Neighbours2,
-        Neighbours3,
-        Neighbours4,
-        Neighbours5,
-        Neighbours6,
-        Neighbours7,
-        Neighbours8
+        Flagged
     }
 }

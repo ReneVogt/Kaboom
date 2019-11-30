@@ -24,8 +24,6 @@ namespace Com.Revo.Games.Kaboom.ViewModels
                     ? KaboomCellState.Flagged
                     : KaboomCellState.Closed;
 
-        public KaboomCellModel()
-            : this(null) { }
         public KaboomCellModel([NotNull] Cell cell)
         {
             this.cell = cell ?? throw new ArgumentNullException(nameof(cell));

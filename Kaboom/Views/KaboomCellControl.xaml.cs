@@ -24,6 +24,7 @@ namespace Com.Revo.Games.Kaboom.Views
             base.OnMouseUp(e);
 
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse because FxCop claims to know better
+            // ReSharper disable once HeuristicUnreachableCode because FxCop claims to know better
             if (e == null) return;
             if (e.ChangedButton != MouseButton.Left && e.ChangedButton != MouseButton.Right) return;
             e.Handled = true;

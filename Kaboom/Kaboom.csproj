@@ -70,6 +70,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\DlgCustomGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\KaboomBoardControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -88,10 +92,14 @@
     </Compile>
     <Compile Include="DesignerSampleData\SampleData.cs" />
     <Compile Include="ViewModels\CustomCommand.cs" />
+    <Compile Include="ViewModels\CustomGameViewModel.cs" />
     <Compile Include="ViewModels\KaboomCellModel.cs" />
     <Compile Include="ViewModels\KaboomBoardModel.cs" />
     <Compile Include="ViewModels\KaboomCellState.cs" />
     <Compile Include="ViewModels\MainWindowModel.cs" />
+    <Compile Include="Views\DlgCustomGame.xaml.cs">
+      <DependentUpon>DlgCustomGame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\KaboomBoardControl.xaml.cs">
       <DependentUpon>KaboomBoardControl.xaml</DependentUpon>
     </Compile>

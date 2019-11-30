@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Markup;
 using Com.Revo.Games.Kaboom.ViewModels.Com.Aki.WpfCommons.Bindings;
+using Com.Revo.Games.Kaboom.Views;
 using JetBrains.Annotations;
 
 namespace Com.Revo.Games.Kaboom.ViewModels
@@ -46,7 +48,11 @@ namespace Com.Revo.Games.Kaboom.ViewModels
             StartGame(30, 16, 99);
         }
         private void StartUserDefinedGame()
-        { }
+        {
+            var dlg = new DlgCustomGame {Owner = Application.Current.MainWindow};
+            if (dlg.ShowDialog() != true) return;
+            StartGame(dlg.CustomGame.Width, dlg.CustomGame.Height, dlg.CustomGame.NumberOfMines);
+        }
         private void StartGame(int width, int height, int numberOfMines)
         {
             Board = new KaboomBoardModel(width, height, numberOfMines);

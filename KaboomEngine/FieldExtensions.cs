@@ -5,21 +5,21 @@ using JetBrains.Annotations;
 namespace Com.Revo.Games.KaboomEngine
 {
     /// <summary>
-    /// Provides extension methods for the <see cref="IKaboomField"/> interface.
+    /// Provides extension methods for the <see cref="IField"/> interface.
     /// </summary>
-    public static class KaboomFieldExtensions
+    public static class FieldExtensions
     {
         /// <summary>
         /// Enumerates the coordinates of the cells adjacent to the cell with the
         /// specified coordinates.
         /// </summary>
-        /// <param name="field">The <see cref="IKaboomField"/> to work on.</param>
+        /// <param name="field">The <see cref="IField"/> to work on.</param>
         /// <param name="x">The x-coordinate of the current cell.</param>
         /// <param name="y">The y-coordinate of the current cell.</param>
         /// <returns>An enumeration of the coordinates of the cells adjacent to the specified cell.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="field"/> cannot be <code>null</code>.</exception>
         /// <exception cref="IndexOutOfRangeException">The specified cell is outside the field.</exception>
-        public static IEnumerable<(int x, int y)> GetCoordinatesAdjacentTo([NotNull] this IKaboomField field, int x, int y)
+        public static IEnumerable<(int x, int y)> GetCoordinatesAdjacentTo([NotNull] this IField field, int x, int y)
         {
             if (field == null)
                 throw new ArgumentNullException(nameof(field));

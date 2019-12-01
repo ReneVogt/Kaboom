@@ -2,43 +2,16 @@
 
 namespace Com.Revo.Games.KaboomEngine
 {
-    /// <summary>
-    /// Represents a cell on a Kaboom minesweeperField.
-    /// </summary>
-    public sealed class Cell
+    sealed class Cell<TState> : ICell
     {
-        readonly IKaboomField field;
+        readonly IField field;
         bool flagged;
 
-        /// <summary>
-        /// The x-coordinate of the cell.
-        /// </summary>
         public int X { get; }
-        /// <summary>
-        /// The y-coordinate of the cell.
-        /// </summary>
         public int Y { get; }
-        /// <summary>
-        /// Number of adjacent cells containing mines.
-        /// This property is only valid if the cell has
-        /// already been uncovered (hence <see cref="IsOpen"/> is <code>true</code>).
-        /// </summary>
         public int AdjacentMines { get; internal set; }
-        /// <summary>
-        /// Tells if this cell contains a mine.
-        /// This property is only valid if the cell has
-        /// already been uncovered (hence <see cref="IsOpen"/> is <code>true</code>)
-        /// or the containing minesweeperField's <see cref="IKaboomField.State"/> is no longer <see cref="FieldState.Sweeping"/>.
-        /// </summary>
         public bool IsMine { get; internal set; }
-        /// <summary>
-        /// Tells if this cell has already been uncovered.
-        /// </summary>
         public bool IsOpen { get; private set; }
-        /// <summary>
-        /// Gets or sets wether this cell has a flag on it.
-        /// This property is only valid as long as the cell is not uncovered.
-        /// </summary>
         public bool IsFlagged
         {
             get => flagged;
@@ -49,12 +22,10 @@ namespace Com.Revo.Games.KaboomEngine
                 CellChanged?.Invoke(this, EventArgs.Empty);
             }
         }
-        /// <summary>
-        /// Raised if the cell's state has been changed.
-        /// </summary>
+        internal TState State { get; set; }
         public event EventHandler CellChanged;
 
-        internal Cell(IKaboomField field, int x, int y)
+        internal Cell(IField field, int x, int y)
         {
             X = x;
             Y = y;
@@ -71,12 +42,6 @@ namespace Com.Revo.Games.KaboomEngine
             };
         }
 
-        /// <summary>
-        /// Uncovers this cell.
-        /// This call is delegated to the <see cref="IKaboomField.Uncover(int,int)"/> method of the
-        /// <see cref="IKaboomField"/> owning this cell. See there for what may happen if
-        /// this method is called.
-        /// </summary>
         public void Uncover()
         {
             field.Uncover(X, Y);

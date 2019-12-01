@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Com.Revo.Games.KaboomEngine 
+namespace Com.Revo.Games.KaboomEngine.Minesweeper 
 {
-    sealed class MinesweeperField : IKaboomField
+    sealed class MinesweeperField : IField
     {
         FieldState state = FieldState.Sweeping;
         static readonly Random random = new Random();
@@ -12,7 +12,8 @@ namespace Com.Revo.Games.KaboomEngine
         public int Width { get; }
         public int Height { get; }
         public int NumberOfMines { get; }
-        public CellCollection Cells { get; }
+        internal CellCollection<object> Cells { get; }
+        ICellCollection IField.Cells => Cells;
         public FieldState State
         {
             get => state;
@@ -40,7 +41,7 @@ namespace Com.Revo.Games.KaboomEngine
             Height = height;
             NumberOfMines = numberOfMines;
 
-            Cells = new CellCollection(this, Width, Height);
+            Cells = new CellCollection<object>(this, Width, Height);
             foreach(var cell in Cells)
                 cell.CellChanged += (sender, e) => StateChanged?.Invoke(this, e);
 
@@ -86,7 +87,7 @@ namespace Com.Revo.Games.KaboomEngine
         void OpenCascade()
         {
             cascade:
-            var cellsToUncover = Cells.Where(cell => cell.IsOpen)
+            var cellsToUncover = Cells.Where<Cell<object>>(cell => cell.IsOpen)
                                       .Select(cell =>
                                                   new
                                                   {
@@ -107,13 +108,13 @@ namespace Com.Revo.Games.KaboomEngine
         void CheckState()
         {
             if (State != FieldState.Sweeping) return;
-            if (Cells.Any(cell => cell.IsOpen && cell.IsMine))
+            if (Cells.Any<Cell<object>>(cell => cell.IsOpen && cell.IsMine))
             {
                 State = FieldState.Exploded;
                 return;
             }
 
-            if (Cells.All(cell => cell.IsOpen || cell.IsMine))
+            if (Cells.All<Cell<object>>(cell => cell.IsOpen || cell.IsMine))
                 State = FieldState.Solved;
         }
     }

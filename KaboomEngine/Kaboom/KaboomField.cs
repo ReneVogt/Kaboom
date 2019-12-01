@@ -1,12 +1,13 @@
 ﻿using System;
 
-namespace Com.Revo.Games.KaboomEngine
+namespace Com.Revo.Games.KaboomEngine.Kaboom
 {
-    class KaboomField : IKaboomField {
+    class KaboomField : IField {
         public int Width { get; }
         public int Height { get; }
         public int NumberOfMines { get; }
-        public CellCollection Cells { get; }
+        internal CellCollection<KaboomState> Cells { get; }
+        ICellCollection IField.Cells => Cells;
         public FieldState State => FieldState.Sweeping;
         public event EventHandler StateChanged;
 
@@ -24,7 +25,7 @@ namespace Com.Revo.Games.KaboomEngine
             Height = height;
             NumberOfMines = numberOfMines;
 
-            Cells = new CellCollection(this, Width, Height);
+            Cells = new CellCollection<KaboomState>(this, Width, Height);
             foreach (var cell in Cells)
                 cell.CellChanged += (sender, e) => StateChanged?.Invoke(this, e);
         }

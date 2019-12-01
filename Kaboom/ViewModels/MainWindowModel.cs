@@ -12,6 +12,8 @@ namespace Com.Revo.Games.Kaboom.ViewModels
     public sealed class MainWindowModel : MarkupExtension, INotifyPropertyChanged
     {
         KaboomBoardModel board;
+        public bool UseMinesweeper { get; set; } = true;
+        public bool UseKaboom { get; set; }
         public CustomCommand BeginnerCommand { get; }
         public CustomCommand AdvancedCommand { get; }
         public CustomCommand ExpertCommand { get; }
@@ -55,7 +57,7 @@ namespace Com.Revo.Games.Kaboom.ViewModels
         }
         private void StartGame(int width, int height, int numberOfMines)
         {
-            Board = new KaboomBoardModel(width, height, numberOfMines);
+            Board = new KaboomBoardModel(width, height, numberOfMines, UseMinesweeper);
         }
         public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChangedInvocator]

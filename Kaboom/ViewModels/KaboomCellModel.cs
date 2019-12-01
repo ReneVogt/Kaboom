@@ -9,7 +9,7 @@ namespace Com.Revo.Games.Kaboom.ViewModels
 {
     public class KaboomCellModel : INotifyPropertyChanged
     {
-        readonly Cell cell;
+        readonly ICell cell;
         public int X => cell.X;
         public int Y => cell.Y;
         public int AdjacentMines => cell.AdjacentMines;
@@ -24,7 +24,7 @@ namespace Com.Revo.Games.Kaboom.ViewModels
                     ? KaboomCellState.Flagged
                     : KaboomCellState.Closed;
 
-        public KaboomCellModel([NotNull] Cell cell)
+        public KaboomCellModel([NotNull] ICell cell)
         {
             this.cell = cell ?? throw new ArgumentNullException(nameof(cell));
             this.cell.CellChanged += (sender, e) => OnPropertyChanged(nameof(State));

@@ -1,7 +1,7 @@
 ﻿namespace Com.Revo.Games.KaboomEngine 
 {
     /// <summary>
-    /// Represents the state of a Kaboom field (<see cref="IKaboomField"/>).
+    /// Represents the state of a Kaboom field (<see cref="IField"/>).
     /// </summary>
     public enum FieldState
     {

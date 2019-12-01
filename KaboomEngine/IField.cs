@@ -4,7 +4,7 @@ namespace Com.Revo.Games.KaboomEngine {
     /// <summary>
     /// Represents a Kaboom game field.
     /// </summary>
-    public interface IKaboomField {
+    public interface IField {
         /// <summary>
         /// The width of this Kaboom field.
         /// </summary>
@@ -20,7 +20,7 @@ namespace Com.Revo.Games.KaboomEngine {
         /// <summary>
         /// The cells of this Kaboom field.
         /// </summary>
-        CellCollection Cells { get; }
+        ICellCollection Cells { get; }
         /// <summary>
         /// The state of this Kaboom field.
         /// </summary>

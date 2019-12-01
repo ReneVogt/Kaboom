@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace Com.Revo.Games.Kaboom.ViewModels {
     public sealed class KaboomBoardModel : INotifyPropertyChanged
     {
-        readonly IKaboomField field;
+        readonly IField field;
         
         public string State =>
             field.State switch {
@@ -18,10 +18,13 @@ namespace Com.Revo.Games.Kaboom.ViewModels {
         public ObservableCollection<ObservableCollection<KaboomCellModel>> Cells { get; }
 
         public KaboomBoardModel()
-            : this(9, 9, 10) { }
-        public KaboomBoardModel(int width, int height, int numberOfMines)
+            : this(9, 9, 10, true) { }
+        public KaboomBoardModel(int width, int height, int numberOfMines, bool minesweeper)
         {
-            field = KaboomFieldProvider.CreateMinesweeperField(width, height, numberOfMines);
+            field = minesweeper 
+                        ? FieldProvider.CreateMinesweeperField(width, height, numberOfMines)
+                        : FieldProvider.CreateKaboomField(width, height, numberOfMines);
+            
             field.StateChanged += (sender, e) => OnPropertyChanged(nameof(State));
             var cells = new ObservableCollection<ObservableCollection<KaboomCellModel>>();
             for (int y = 0; y < field.Height; y++)

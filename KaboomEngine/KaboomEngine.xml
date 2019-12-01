@@ -4,84 +4,9 @@
         <name>KaboomEngine</name>
     </assembly>
     <members>
-        <member name="T:Com.Revo.Games.KaboomEngine.Cell">
-            <summary>
-            Represents a cell on a Kaboom minesweeperField.
-            </summary>
-        </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.Cell.X">
-            <summary>
-            The x-coordinate of the cell.
-            </summary>
-        </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.Cell.Y">
-            <summary>
-            The y-coordinate of the cell.
-            </summary>
-        </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.Cell.AdjacentMines">
-            <summary>
-            Number of adjacent cells containing mines.
-            This property is only valid if the cell has
-            already been uncovered (hence <see cref="P:Com.Revo.Games.KaboomEngine.Cell.IsOpen"/> is <code>true</code>).
-            </summary>
-        </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.Cell.IsMine">
-            <summary>
-            Tells if this cell contains a mine.
-            This property is only valid if the cell has
-            already been uncovered (hence <see cref="P:Com.Revo.Games.KaboomEngine.Cell.IsOpen"/> is <code>true</code>)
-            or the containing minesweeperField's <see cref="P:Com.Revo.Games.KaboomEngine.IKaboomField.State"/> is no longer <see cref="F:Com.Revo.Games.KaboomEngine.FieldState.Sweeping"/>.
-            </summary>
-        </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.Cell.IsOpen">
-            <summary>
-            Tells if this cell has already been uncovered.
-            </summary>
-        </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.Cell.IsFlagged">
-            <summary>
-            Gets or sets wether this cell has a flag on it.
-            This property is only valid as long as the cell is not uncovered.
-            </summary>
-        </member>
-        <member name="E:Com.Revo.Games.KaboomEngine.Cell.CellChanged">
-            <summary>
-            Raised if the cell's state has been changed.
-            </summary>
-        </member>
-        <member name="M:Com.Revo.Games.KaboomEngine.Cell.Uncover">
-            <summary>
-            Uncovers this cell.
-            This call is delegated to the <see cref="M:Com.Revo.Games.KaboomEngine.IKaboomField.Uncover(System.Int32,System.Int32)"/> method of the
-            <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomField"/> owning this cell. See there for what may happen if
-            this method is called.
-            </summary>
-        </member>
-        <member name="T:Com.Revo.Games.KaboomEngine.CellCollection">
-            <summary>
-            Represents a two-dimensional readonly collection
-            of Kaboom cells.
-            </summary>
-        </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.CellCollection.Item(System.Int32,System.Int32)">
-            <summary>
-            Gets the Kaboom cell at the specified coordinates.
-            </summary>
-            <param name="x">The x-coordinate of the cell.</param>
-            <param name="y">The x-coordinate of the cell.</param>
-            <returns>The cell (<see cref="T:Com.Revo.Games.KaboomEngine.Cell"/> at the specified location.</returns>
-            <exception cref="T:System.IndexOutOfRangeException">The <paramref name="x"/>- and/or <paramref name="y"/>-coordinate are outside the bounds of this field.</exception>
-        </member>
-        <member name="M:Com.Revo.Games.KaboomEngine.CellCollection.GetEnumerator">
-            <inheritdoc />
-        </member>
-        <member name="M:Com.Revo.Games.KaboomEngine.CellCollection.System#Collections#IEnumerable#GetEnumerator">
-            <inheritdoc />
-        </member>
         <member name="T:Com.Revo.Games.KaboomEngine.FieldState">
             <summary>
-            Represents the state of a Kaboom field (<see cref="T:Com.Revo.Games.KaboomEngine.IKaboomField"/>).
+            Represents the state of a Kaboom field (<see cref="T:Com.Revo.Games.KaboomEngine.IField"/>).
             </summary>
         </member>
         <member name="F:Com.Revo.Games.KaboomEngine.FieldState.Sweeping">
@@ -99,42 +24,110 @@
             The field is exploded.
             </summary>
         </member>
-        <member name="T:Com.Revo.Games.KaboomEngine.IKaboomField">
+        <member name="T:Com.Revo.Games.KaboomEngine.ICell">
+            <summary>
+            Represents a cell in a <see cref="T:Com.Revo.Games.KaboomEngine.ICellCollection"/> of an <see cref="T:Com.Revo.Games.KaboomEngine.IField"/>
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.ICell.X">
+            <summary>
+            The x-coordinate of the cell.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.ICell.Y">
+            <summary>
+            The y-coordinate of the cell.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.ICell.AdjacentMines">
+            <summary>
+            Number of adjacent cells containing mines.
+            This property is only valid if the cell has
+            already been uncovered (hence <see cref="P:Com.Revo.Games.KaboomEngine.ICell.IsOpen"/> is <code>true</code>).
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.ICell.IsMine">
+            <summary>
+            Tells if this cell contains a mine.
+            This property is only valid if the cell has
+            already been uncovered (hence <see cref="P:Com.Revo.Games.KaboomEngine.ICell.IsOpen"/> is <code>true</code>)
+            or the containing minesweeperField's <see cref="P:Com.Revo.Games.KaboomEngine.IField.State"/> is no longer <see cref="F:Com.Revo.Games.KaboomEngine.FieldState.Sweeping"/>.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.ICell.IsOpen">
+            <summary>
+            Tells if this cell has already been uncovered.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.ICell.IsFlagged">
+            <summary>
+            Gets or sets wether this cell has a flag on it.
+            This property is only valid as long as the cell is not uncovered.
+            </summary>
+        </member>
+        <member name="E:Com.Revo.Games.KaboomEngine.ICell.CellChanged">
+            <summary>
+            Raised if the cell's state has been changed.
+            </summary>
+        </member>
+        <member name="M:Com.Revo.Games.KaboomEngine.ICell.Uncover">
+            <summary>
+            Uncovers this cell.
+            This call is delegated to the <see cref="M:Com.Revo.Games.KaboomEngine.IField.Uncover(System.Int32,System.Int32)"/> method of the
+            <see cref="T:Com.Revo.Games.KaboomEngine.IField"/> owning this cell. See there for what may happen if
+            this method is called.
+            </summary>
+        </member>
+        <member name="T:Com.Revo.Games.KaboomEngine.ICellCollection">
+            <summary>
+            Represents a collection of cells in a <see cref="T:Com.Revo.Games.KaboomEngine.IField"/>.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.ICellCollection.Item(System.Int32,System.Int32)">
+            <summary>
+            Gets the Kaboom cell at the specified coordinates.
+            </summary>
+            <param name="x">The x-coordinate of the cell.</param>
+            <param name="y">The x-coordinate of the cell.</param>
+            <returns>The cell (<see cref="T:Com.Revo.Games.KaboomEngine.ICell"/> at the specified location.</returns>
+            <exception cref="T:System.IndexOutOfRangeException">The <paramref name="x"/>- and/or <paramref name="y"/>-coordinate are outside the bounds of this field.</exception>
+        </member>
+        <member name="T:Com.Revo.Games.KaboomEngine.IField">
             <summary>
             Represents a Kaboom game field.
             </summary>
         </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomField.Width">
+        <member name="P:Com.Revo.Games.KaboomEngine.IField.Width">
             <summary>
             The width of this Kaboom field.
             </summary>
         </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomField.Height">
+        <member name="P:Com.Revo.Games.KaboomEngine.IField.Height">
             <summary>
             The height of this Kaboom field.
             </summary>
         </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomField.NumberOfMines">
+        <member name="P:Com.Revo.Games.KaboomEngine.IField.NumberOfMines">
             <summary>
             Number of mines on this Kaboom field.
             </summary>
         </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomField.Cells">
+        <member name="P:Com.Revo.Games.KaboomEngine.IField.Cells">
             <summary>
             The cells of this Kaboom field.
             </summary>
         </member>
-        <member name="P:Com.Revo.Games.KaboomEngine.IKaboomField.State">
+        <member name="P:Com.Revo.Games.KaboomEngine.IField.State">
             <summary>
             The state of this Kaboom field.
             </summary>
         </member>
-        <member name="E:Com.Revo.Games.KaboomEngine.IKaboomField.StateChanged">
+        <member name="E:Com.Revo.Games.KaboomEngine.IField.StateChanged">
             <summary>
             Raised if the state of this field has changed.
             </summary>
         </member>
-        <member name="M:Com.Revo.Games.KaboomEngine.IKaboomField.Uncover(System.Int32,System.Int32)">
+        <member name="M:Com.Revo.Games.KaboomEngine.IField.Uncover(System.Int32,System.Int32)">
             <summary>
             Uncovers cells depending on the state of the cell at the specified location.
             If the cell is closed and flagged, nothing will happen.
@@ -150,31 +143,31 @@
             <param name="y">The y-coordinate of the cell to uncover.</param>
             <exception cref="T:System.IndexOutOfRangeException">The <paramref name="x"/>- and/or <paramref name="y"/>-coordinate was outside the bounds of this field.</exception>
         </member>
-        <member name="T:Com.Revo.Games.KaboomEngine.KaboomFieldExtensions">
+        <member name="T:Com.Revo.Games.KaboomEngine.FieldExtensions">
             <summary>
-            Provides extension methods for the <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomField"/> interface.
+            Provides extension methods for the <see cref="T:Com.Revo.Games.KaboomEngine.IField"/> interface.
             </summary>
         </member>
-        <member name="M:Com.Revo.Games.KaboomEngine.KaboomFieldExtensions.GetCoordinatesAdjacentTo(Com.Revo.Games.KaboomEngine.IKaboomField,System.Int32,System.Int32)">
+        <member name="M:Com.Revo.Games.KaboomEngine.FieldExtensions.GetCoordinatesAdjacentTo(Com.Revo.Games.KaboomEngine.IField,System.Int32,System.Int32)">
             <summary>
             Enumerates the coordinates of the cells adjacent to the cell with the
             specified coordinates.
             </summary>
-            <param name="field">The <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomField"/> to work on.</param>
+            <param name="field">The <see cref="T:Com.Revo.Games.KaboomEngine.IField"/> to work on.</param>
             <param name="x">The x-coordinate of the current cell.</param>
             <param name="y">The y-coordinate of the current cell.</param>
             <returns>An enumeration of the coordinates of the cells adjacent to the specified cell.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="field"/> cannot be <code>null</code>.</exception>
             <exception cref="T:System.IndexOutOfRangeException">The specified cell is outside the field.</exception>
         </member>
-        <member name="T:Com.Revo.Games.KaboomEngine.KaboomFieldProvider">
+        <member name="T:Com.Revo.Games.KaboomEngine.FieldProvider">
             <summary>
-            A static provider for for Kaboom fields (of type <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomField"/>.
+            A static provider for for Kaboom fields (of type <see cref="T:Com.Revo.Games.KaboomEngine.IField"/>.
             </summary>
         </member>
-        <member name="M:Com.Revo.Games.KaboomEngine.KaboomFieldProvider.CreateMinesweeperField(System.Int32,System.Int32,System.Int32)">
+        <member name="M:Com.Revo.Games.KaboomEngine.FieldProvider.CreateMinesweeperField(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Provides an <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomField"/> using a standard Minesweeper behaviour.
+            Provides an <see cref="T:Com.Revo.Games.KaboomEngine.IField"/> using a standard Minesweeper behaviour.
             </summary>
             <param name="width"></param>
             <param name="height"></param>
@@ -182,9 +175,9 @@
             <returns>A fresh Kaboom field with the specified configuration and a default Minesweeper behaviour.</returns>
             <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="width"/> and <paramref name="height"/> must be between 1 and 1000 and the number of mines cannot exceed the number of cells.</exception>
         </member>
-        <member name="M:Com.Revo.Games.KaboomEngine.KaboomFieldProvider.CreateKaboomField(System.Int32,System.Int32,System.Int32)">
+        <member name="M:Com.Revo.Games.KaboomEngine.FieldProvider.CreateKaboomField(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Provides an <see cref="T:Com.Revo.Games.KaboomEngine.IKaboomField"/> using the Kaboom behaviour (you lose when you guess, but you won't fail if you're forced to guess).
+            Provides an <see cref="T:Com.Revo.Games.KaboomEngine.IField"/> using the Kaboom behaviour (you lose when you guess, but you won't fail if you're forced to guess).
             </summary>
             <param name="width"></param>
             <param name="height"></param>

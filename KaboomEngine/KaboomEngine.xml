@@ -4,6 +4,9 @@
         <name>KaboomEngine</name>
     </assembly>
     <members>
+        <member name="P:Com.Revo.Games.KaboomEngine.Field`1.NumberOfMines">
+            <inheritdoc />
+        </member>
         <member name="T:Com.Revo.Games.KaboomEngine.FieldState">
             <summary>
             Represents the state of a Kaboom field (<see cref="T:Com.Revo.Games.KaboomEngine.IField"/>).

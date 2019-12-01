@@ -2,16 +2,9 @@
 
 namespace Com.Revo.Games.KaboomEngine.Kaboom
 {
-    class KaboomField : IField {
-        public int Width { get; }
-        public int Height { get; }
-        public int NumberOfMines { get; }
-        internal CellCollection<KaboomState> Cells { get; }
-        ICellCollection IField.Cells => Cells;
-        public FieldState State => FieldState.Sweeping;
-        public event EventHandler StateChanged;
-
-        public KaboomField(int width, int height, int numberOfMines)
+    sealed class KaboomField : Field<KaboomState>
+    {
+        public KaboomField(int width, int height, int numberOfMines) : base(width, height, numberOfMines)
         {
 #pragma warning disable CA1303 // Do not pass literals as localized parameters
             if (width < 1) throw new ArgumentOutOfRangeException(nameof(width), width, "The field must contain at least one column.");
@@ -20,16 +13,11 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
             if (height > 1000) throw new ArgumentOutOfRangeException(nameof(height), height, "The field can not contain more than 1000 row.");
             if (numberOfMines > width * height) throw new ArgumentOutOfRangeException(nameof(numberOfMines), numberOfMines, "The number of mines cannot be larger than the number of cells.");
 #pragma warning restore CA1303 // Do not pass literals as localized parameters
-
-            Width = width;
-            Height = height;
-            NumberOfMines = numberOfMines;
-
-            Cells = new CellCollection<KaboomState>(this, Width, Height);
-            foreach (var cell in Cells)
-                cell.CellChanged += (sender, e) => StateChanged?.Invoke(this, e);
         }
-        public void Uncover(int x, int y)
+        public override void Uncover(int x, int y)
+        {
+        }
+        protected override void OnCellStateChanged(object sender, EventArgs e)
         {
         }
     }

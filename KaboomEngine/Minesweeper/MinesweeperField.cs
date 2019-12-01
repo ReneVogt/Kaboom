@@ -4,47 +4,12 @@ using System.Linq;
 
 namespace Com.Revo.Games.KaboomEngine.Minesweeper 
 {
-    sealed class MinesweeperField : IField
+    sealed class MinesweeperField : Field<object>
     {
-        FieldState state = FieldState.Sweeping;
         static readonly Random random = new Random();
 
-        public int Width { get; }
-        public int Height { get; }
-        public int NumberOfMines { get; }
-        internal CellCollection<object> Cells { get; }
-        ICellCollection IField.Cells => Cells;
-        public FieldState State
+        public MinesweeperField(int width, int height, int numberOfMines) : base(width, height,numberOfMines)
         {
-            get => state;
-            private set
-            {
-                if (state == value) return;
-                state = value;
-                StateChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        public event EventHandler StateChanged;
-
-        public MinesweeperField(int width, int height, int numberOfMines)
-        {
-#pragma warning disable CA1303 // Do not pass literals as localized parameters
-            if (width < 1) throw new ArgumentOutOfRangeException(nameof(width), width, "The field must contain at least one column.");
-            if (width > 1000) throw new ArgumentOutOfRangeException(nameof(width), width, "The field can not contain more than 1000 columns.");
-            if (height < 1) throw new ArgumentOutOfRangeException(nameof(height), height, "The field must contain at least one row.");
-            if (height > 1000) throw new ArgumentOutOfRangeException(nameof(height), height, "The field can not contain more than 1000 row.");
-            if (numberOfMines > width*height) throw new ArgumentOutOfRangeException(nameof(numberOfMines), numberOfMines, "The number of mines cannot be larger than the number of cells.");
-#pragma warning restore CA1303 // Do not pass literals as localized parameters
-            
-            Width = width;
-            Height = height;
-            NumberOfMines = numberOfMines;
-
-            Cells = new CellCollection<object>(this, Width, Height);
-            foreach(var cell in Cells)
-                cell.CellChanged += (sender, e) => StateChanged?.Invoke(this, e);
-
             HashSet<(int x, int y)> used = new HashSet<(int x, int y)>();
 
             for (int mine = 0; mine < NumberOfMines; mine++)
@@ -60,7 +25,10 @@ namespace Com.Revo.Games.KaboomEngine.Minesweeper
                 cell.AdjacentMines = this.GetCoordinatesAdjacentTo(cell.X, cell.Y).Count(c => Cells[c.x, c.y].IsMine);
 
         }
-        public void Uncover(int x, int y)
+        protected override void OnCellStateChanged(object sender, EventArgs e)
+        {
+        }
+        public override void Uncover(int x, int y)
         {
             Uncover(x, y, true);
         }

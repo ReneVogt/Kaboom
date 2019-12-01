@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Cell.cs" />
     <Compile Include="CellCollection.cs" />
+    <Compile Include="Field.cs" />
     <Compile Include="FieldState.cs" />
     <Compile Include="ICell.cs" />
     <Compile Include="ICellCollection.cs" />

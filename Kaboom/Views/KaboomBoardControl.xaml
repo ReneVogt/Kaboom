@@ -12,11 +12,11 @@
         <Border.Resources>
             <DataTemplate x:Key="CellTemplate" DataType="{x:Type ViewModels:KaboomCellModel}">
                 <Border BorderBrush="LightGray" BorderThickness="1">
-                    <Views:KaboomCellControl Content="{Binding}" Margin="0" Padding="0"/>
+                    <Views:KaboomCellControl Content="{Binding Mode=OneTime}" Margin="0" Padding="0"/>
                 </Border>
             </DataTemplate>
             <DataTemplate x:Key="RowTemplate">
-                <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource CellTemplate}" Margin="0" Padding="0">
+                <ItemsControl ItemsSource="{Binding Mode=OneTime}" ItemTemplate="{DynamicResource CellTemplate}" Margin="0" Padding="0">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0"/>
@@ -25,7 +25,7 @@
                 </ItemsControl>
             </DataTemplate>
         </Border.Resources>
-        <ItemsControl ItemTemplate="{DynamicResource RowTemplate}" ItemsSource="{Binding Cells}" 
+        <ItemsControl ItemTemplate="{DynamicResource RowTemplate}" ItemsSource="{Binding Cells, Mode=OneTime}" 
                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Border>

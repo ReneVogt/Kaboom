@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -15,7 +15,7 @@ namespace Com.Revo.Games.Kaboom.ViewModels {
                 FieldState.Exploded => "You lost!",
                 FieldState.Solved => "You win!",
                 _ => $"Mines: {Cells.SelectMany(row => row).Count(cell => cell.State == KaboomCellState.Flagged)}/{field.NumberOfMines}"};
-        public ObservableCollection<ObservableCollection<KaboomCellModel>> Cells { get; }
+        public List<List<KaboomCellModel>> Cells { get; }
 
         public KaboomBoardModel()
             : this(9, 9, 10, true) { }
@@ -26,16 +26,20 @@ namespace Com.Revo.Games.Kaboom.ViewModels {
                         : FieldProvider.CreateKaboomField(width, height, numberOfMines);
             
             field.StateChanged += (sender, e) => OnPropertyChanged(nameof(State));
-            var cells = new ObservableCollection<ObservableCollection<KaboomCellModel>>();
-            for (int y = 0; y < field.Height; y++)
-            {
-                ObservableCollection<KaboomCellModel> row = new ObservableCollection<KaboomCellModel>();
-                for (int x = 0; x < field.Width; x++)
-                    row.Add(new KaboomCellModel(field.Cells[x, y]));
-                cells.Add(row);
-            }
 
-            Cells = cells;
+            Cells = Enumerable.Range(0, field.Height)
+                              .Select(y => Enumerable.Range(0, field.Width)
+                                                     .Select(x => CreateCellModel(x, y))
+                                                     .ToList())
+                              .ToList();
+
+            KaboomCellModel CreateCellModel(int x, int y)
+            {
+                var cell = field.Cells[x, y];
+                var model = new KaboomCellModel(cell);
+                cell.CellChanged += (sender, e) => OnPropertyChanged(nameof(State));
+                return model;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

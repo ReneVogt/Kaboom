@@ -54,24 +54,26 @@ namespace Com.Revo.Games.KaboomEngine.Minesweeper
         }
         void OpenCascade()
         {
-            cascade:
-            var cellsToUncover = Cells.Where<Cell<object>>(cell => cell.IsOpen)
-                                      .Select(cell =>
-                                                  new
-                                                  {
-                                                      cell,
-                                                      closedNeighbours = this.GetCoordinatesAdjacentTo(cell.X, cell.Y)
-                                                                         .Select(c => Cells[c.x, c.y])
-                                                                         .Where(neighbour => !neighbour.IsOpen)
-                                                                         .ToArray()
-                                                  })
-                                      .Where(x => x.cell.AdjacentMines == x.closedNeighbours.Count(neighbour => neighbour.IsFlagged))
-                                      .SelectMany(x => x.closedNeighbours.Where(neighbour => !neighbour.IsFlagged))
-                                      .Distinct()
-                                      .ToList();
-            if (cellsToUncover.Count == 0) return;
-            cellsToUncover.ForEach(cell => Uncover(cell.X, cell.Y, false));
-            goto cascade;
+            do
+            {
+                var cellsToUncover = Cells.Where<Cell<object>>(cell => cell.IsOpen)
+                                          .Select(cell =>
+                                                      new
+                                                      {
+                                                          cell,
+                                                          closedNeighbours = this.GetCoordinatesAdjacentTo(cell.X, cell.Y)
+                                                                                 .Select(c => Cells[c.x, c.y])
+                                                                                 .Where(neighbour => !neighbour.IsOpen)
+                                                                                 .ToArray()
+                                                      })
+                                          .Where(x => x.cell.AdjacentMines == x.closedNeighbours.Count(neighbour => neighbour.IsFlagged))
+                                          .SelectMany(x => x.closedNeighbours.Where(neighbour => !neighbour.IsFlagged))
+                                          .Distinct()
+                                          .ToList();
+                if (cellsToUncover.Count == 0) return;
+                cellsToUncover.ForEach(cell => Uncover(cell.X, cell.Y, false));
+
+            } while (State == FieldState.Sweeping);
         }
         void CheckState()
         {

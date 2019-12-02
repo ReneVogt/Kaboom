@@ -1,5 +1,7 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using Com.Revo.Games.Kaboom.ViewModels;
+using Com.Revo.Games.Kaboom.ViewModels.Com.Aki.WpfCommons.Bindings;
 
 namespace Com.Revo.Games.Kaboom.Views
 {
@@ -8,14 +10,21 @@ namespace Com.Revo.Games.Kaboom.Views
     /// </summary>
     public sealed partial class KaboomCellControl
     {
+        public static readonly DependencyProperty CellClickedProperty =
+            DependencyProperty.Register(nameof(CellClicked), typeof(ICommand), typeof(KaboomCellControl), new UIPropertyMetadata(null));
+
+        public CustomCommand<KaboomCellClickType> CellClicked
+        {
+            get => (CustomCommand<KaboomCellClickType>)GetValue(CellClickedProperty);
+            set => SetValue(CellClickedProperty, value);
+        }
         public KaboomCellControl()
         {
             InitializeComponent();
         }
         private void RaiseCellClickedEvent(KaboomCellClickType clickType)
         {
-            if (!(DataContext is KaboomCellModel model)) return;
-            var command = model.ClickCommand;
+            var command = CellClicked;
             if (command?.CanExecute(clickType) == true)
                 command.Execute(clickType);
         }

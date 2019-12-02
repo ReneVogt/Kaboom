@@ -12,7 +12,7 @@
         <Border.Resources>
             <DataTemplate x:Key="CellTemplate" DataType="{x:Type ViewModels:KaboomCellModel}">
                 <Border BorderBrush="LightGray" BorderThickness="1">
-                    <Views:KaboomCellControl Content="{Binding Mode=OneTime}" Margin="0" Padding="0"/>
+                    <Views:KaboomCellControl Content="{Binding Mode=OneTime}" CellClicked="{Binding ClickCommand, Mode=OneTime}" Margin="0" Padding="0"/>
                 </Border>
             </DataTemplate>
             <DataTemplate x:Key="RowTemplate">

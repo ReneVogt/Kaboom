@@ -1,36 +1,80 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Com.Revo.Games.KaboomEngine
 {
     sealed class Cell<TState> : ICell
     {
-        readonly IField field;
         bool flagged;
+        bool isOpen;
+        bool isMine;
+        int adjacentMines;
+        TState state;
 
+        public IField Field { get; }
         public int X { get; }
         public int Y { get; }
-        public int AdjacentMines { get; internal set; }
-        public bool IsMine { get; internal set; }
-        public bool IsOpen { get; private set; }
+        public int AdjacentMines
+        {
+            get => adjacentMines;
+            internal set
+            {
+                if (adjacentMines == value) return;
+                adjacentMines = value;
+                RaiseCellChangedEvent();
+            }
+        }
+        public bool IsMine
+        {
+            get => isMine;
+            internal set
+            {
+                if (isMine == value) return;
+                isMine = value;
+                RaiseCellChangedEvent();
+            }
+        }
+        public bool IsOpen
+        {
+            get => isOpen;
+            internal set
+            {
+                if (isOpen == value) return;
+                isOpen = value;
+                if (isOpen) flagged = false;
+                RaiseCellChangedEvent();
+            }
+        }
         public bool IsFlagged
         {
             get => flagged;
             set
             {
-                if (IsOpen || value == flagged || field.State != FieldState.Sweeping) return;
+                if (IsOpen || value == flagged || Field.State != FieldState.Sweeping) return;
                 flagged = value;
-                CellChanged?.Invoke(this, EventArgs.Empty);
+                RaiseCellChangedEvent();
             }
         }
-        internal TState State { get; set; }
+        public IEnumerable<ICell> Neighbours => Field.GetCoordinatesAdjacentTo(X, Y).Select(c => Field.Cells[c.x, c.y]);
+        internal TState State
+        {
+            get => state;
+            set
+            {
+                if (state?.Equals(value) == true) return;
+                state = value;
+                RaiseCellChangedEvent();
+            }
+        }
         public event EventHandler CellChanged;
 
         internal Cell(IField field, int x, int y)
         {
             X = x;
             Y = y;
-            this.field = field;
-            this.field.StateChanged += (sender, e) =>
+            Field = field;
+            Field.StateChanged += (sender, e) =>
             {
                 if (!IsMine || IsOpen || flagged) return;
                 if (field.State == FieldState.Exploded)
@@ -38,22 +82,17 @@ namespace Com.Revo.Games.KaboomEngine
                 else if (field.State == FieldState.Solved)
                     flagged = true;
                 else return;
-                CellChanged?.Invoke(this, EventArgs.Empty);
+                RaiseCellChangedEvent();
             };
         }
 
         public void Uncover()
         {
-            field.Uncover(X, Y);
+            Field.Uncover(X, Y);
         }
 
-        internal void UncoverInternal(int adjacentMines)
-        {
-            if (IsOpen) return;
-            IsOpen = true;
-            AdjacentMines = adjacentMines;
-            flagged = false;
-            CellChanged?.Invoke(this, EventArgs.Empty);
-        }
+        public override string ToString() => $"Cell({X}, {Y}): {(IsOpen ? "Open" : "Closed")} {(IsMine ? "Mine" : "Free")} {AdjacentMines} ({State})";
+
+        internal void RaiseCellChangedEvent() => CellChanged?.Invoke(this, EventArgs.Empty);
     }
 }

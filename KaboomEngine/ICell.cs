@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Com.Revo.Games.KaboomEngine {
     /// <summary>
     /// Represents a cell in a <see cref="ICellCollection"/> of an <see cref="IField"/>
     /// </summary>
     public interface ICell {
+        /// <summary>
+        /// The <see cref="IField"/> this cell belongs to.
+        /// </summary>
+        IField Field { get; }
         /// <summary>
         /// The x-coordinate of the cell.
         /// </summary>
@@ -46,5 +51,10 @@ namespace Com.Revo.Games.KaboomEngine {
         /// this method is called.
         /// </summary>
         void Uncover();
+
+        /// <summary>
+        /// Enumerates the cell adjacent to this cell.
+        /// </summary>
+        IEnumerable<ICell> Neighbours { get; }
     }
 }

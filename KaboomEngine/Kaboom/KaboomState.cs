@@ -1,6 +1,10 @@
 ﻿namespace Com.Revo.Games.KaboomEngine.Kaboom
 {
-    sealed class KaboomState
+    enum KaboomState
     {
+        None,
+        Mine,
+        Free,
+        Indeterminate
     }
 }

@@ -32,6 +32,11 @@
             Represents a cell in a <see cref="T:Com.Revo.Games.KaboomEngine.ICellCollection"/> of an <see cref="T:Com.Revo.Games.KaboomEngine.IField"/>
             </summary>
         </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.ICell.Field">
+            <summary>
+            The <see cref="T:Com.Revo.Games.KaboomEngine.IField"/> this cell belongs to.
+            </summary>
+        </member>
         <member name="P:Com.Revo.Games.KaboomEngine.ICell.X">
             <summary>
             The x-coordinate of the cell.
@@ -79,6 +84,11 @@
             This call is delegated to the <see cref="M:Com.Revo.Games.KaboomEngine.IField.Uncover(System.Int32,System.Int32)"/> method of the
             <see cref="T:Com.Revo.Games.KaboomEngine.IField"/> owning this cell. See there for what may happen if
             this method is called.
+            </summary>
+        </member>
+        <member name="P:Com.Revo.Games.KaboomEngine.ICell.Neighbours">
+            <summary>
+            Enumerates the cell adjacent to this cell.
             </summary>
         </member>
         <member name="T:Com.Revo.Games.KaboomEngine.ICellCollection">

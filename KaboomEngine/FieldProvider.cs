@@ -26,6 +26,6 @@ namespace Com.Revo.Games.KaboomEngine
         /// <param name="numberOfMines"></param>
         /// <returns>A fresh Kaboom field with the specified configuration.</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="width"/> and <paramref name="height"/> must be between 1 and 1000 and the number of mines cannot exceed the number of cells.</exception>
-        public static IField CreateKaboomField(int width, int height, int numberOfMines) => new KaboomField(width, height, numberOfMines);
+        public static IField CreateKaboomField(int width, int height, int numberOfMines) => new KaboomField(width, height, numberOfMines, new KaboomFieldSolver());
     }
 }

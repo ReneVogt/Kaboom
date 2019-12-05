@@ -8,7 +8,7 @@ namespace Com.Revo.Games.KaboomEngine.Minesweeper
     {
         static readonly Random random = new Random();
 
-        public MinesweeperField(int width, int height, int numberOfMines) : base(width, height,numberOfMines)
+        public MinesweeperField(int width, int height, int numberOfMines) : base(width, height, numberOfMines)
         {
             HashSet<(int x, int y)> used = new HashSet<(int x, int y)>();
 
@@ -41,7 +41,8 @@ namespace Com.Revo.Games.KaboomEngine.Minesweeper
 
             if (!cell.IsOpen)
             {
-                cell.UncoverInternal(cell.AdjacentMines);
+                cell.IsOpen = true;
+                cell.IsFlagged = false;
                 if (cell.IsMine)
                 {
                     State = FieldState.Exploded;

@@ -18,13 +18,10 @@ namespace Com.Revo.Games.Kaboom.ViewModels {
         public List<List<KaboomCellModel>> Cells { get; }
 
         public KaboomBoardModel()
-            : this(9, 9, 10, true) { }
-        public KaboomBoardModel(int width, int height, int numberOfMines, bool minesweeper)
+            : this(9, 9, 10) { }
+        public KaboomBoardModel(int width, int height, int numberOfMines)
         {
-            field = minesweeper 
-                        ? FieldProvider.CreateMinesweeperField(width, height, numberOfMines)
-                        : FieldProvider.CreateKaboomField(width, height, numberOfMines);
-            
+            field = FieldProvider.CreateKaboomField(width, height, numberOfMines);
             field.StateChanged += (sender, e) => OnPropertyChanged(nameof(State));
 
             Cells = Enumerable.Range(0, field.Height)

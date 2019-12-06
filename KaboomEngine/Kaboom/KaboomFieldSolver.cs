@@ -17,53 +17,83 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
             // Reset internal states
             foreach (var cell in field.Cells)
             {
-                if (cell.IsOpen)
+                if (cell.IsOpen || cell.State == KaboomState.Indeterminate)
                     cell.State = KaboomState.None;
-                else if (cell.State == KaboomState.Indeterminate)
-                    cell.State = KaboomState.None;
+                cell.IsMine = cell.State == KaboomState.Mine;
             }
 
-            // Check for knwon free cells to determine if the player just blowed themselfes up
             var cellToOpen = field.Cells[coordinatesToOpen.x, coordinatesToOpen.y];
-            var freeCells = field.Cells.Where<Cell<KaboomState>>(cell => !cell.IsOpen && cell.State == KaboomState.Free).ToList();
-            cellToOpen.State = freeCells.Count > 0 && !freeCells.Contains(cellToOpen) ? KaboomState.Mine : KaboomState.Free;
+
+            // check if guessing was forced
+            var freeCells = field.Cells.Where<Cell<KaboomState>>(cell => cell.State == KaboomState.Free).ToList();
+            cellToOpen.State = cellToOpen.State == KaboomState.Mine || 
+                               freeCells.Count > 0 && !freeCells.Contains(cellToOpen) 
+                                   ? KaboomState.Mine 
+                                   : KaboomState.Free;
             cellToOpen.IsOpen = true;
 
             // determine border cells
             var closedBorderCells = field.Cells
-                                    .Where<Cell<KaboomState>>(
-                                        cell => !cell.IsOpen && cell.Neighbours.Any(neighbour => neighbour.IsOpen))
-                                    .Distinct()
-                                    .ToList();
+                                         .Where<Cell<KaboomState>>(
+                                             cell => !cell.IsOpen && cell.Neighbours.Any(neighbour => neighbour.IsOpen))
+                                         .Distinct()
+                                         .ToList();
+
             var openBorderCells = field.Cells
-                                  .Where<Cell<KaboomState>>(cell => cell.IsOpen &&
-                                                                    cell.Neighbours.Any(neighbour => !neighbour.IsOpen))
-                                  .Distinct()
-                                  .ToList();
+                                       .Where<Cell<KaboomState>>(cell => cell.IsOpen &&
+                                                                         cell.Neighbours.Any(neighbour => !neighbour.IsOpen))
+                                       .Distinct()
+                                       .ToList();
 
             // set states of closed border cells
-            foreach (var cell in closedBorderCells.Where(cell => cell.State == KaboomState.None))
-                cell.State = KaboomState.Indeterminate;
+            var undefinedBorderCells = closedBorderCells.Where(cell => cell.State == KaboomState.None).ToList();
+            undefinedBorderCells.ForEach(cell => cell.State = KaboomState.Indeterminate);
 
             // Create a dictionary from open border cells to their closed neighbours
             var openToClosedBorderCells =
-                openBorderCells.ToDictionary(openCell => openCell, openCell => openCell.Neighbours.Cast<Cell<KaboomState>>().Where(neighbour => !neighbour.IsOpen).ToList());
+                openBorderCells.ToDictionary(openCell => openCell, 
+                                             openCell => openCell.Neighbours.Cast<Cell<KaboomState>>()
+                                                                 .Where(neighbour => !neighbour.IsOpen).ToList());
+
+            // determine closed border cells exclusive to cellToOpen
+            var closedBorderCellsExclusiveToOpenedCell = openToClosedBorderCells[cellToOpen]
+                                                         .Where(neighbour => neighbour.Neighbours.All(n => !n.IsOpen || n == cellToOpen))
+                                                         .ToList();
 
             // Set obvious mine fields (number of adjacent mines equals number of adjacent closed cells)
-            foreach (Cell<KaboomState> mineNeighbour in openToClosedBorderCells.Where(kvp => kvp.Key != cellToOpen && kvp.Key.AdjacentMines == kvp.Value.Count).SelectMany(kvp => kvp.Value))
+            foreach (Cell<KaboomState> mineNeighbour in openToClosedBorderCells.Where(kvp =>
+                                                                                          kvp.Key != cellToOpen &&
+                                                                                          kvp.Key.AdjacentMines == kvp.Value.Count)
+                                                                               .SelectMany(kvp => kvp.Value))
+            {
                 mineNeighbour.State = KaboomState.Mine;
+                mineNeighbour.IsMine = true;
+                undefinedBorderCells.Remove(mineNeighbour);
+            }
 
             // Now set "obviously" free cells (number of adjacent mines from above fulfills a neighbouring open cell's adjacent mine count.
             foreach (Cell<KaboomState> closedCell in from closedCell in closedBorderCells
-                                                     let openNeighbours = closedCell.Neighbours.Where(cell => cell.IsOpen && cell != cellToOpen).ToList()
+                                                     where closedCell.State != KaboomState.Mine
+                                                     let openNeighbours =
+                                                         closedCell.Neighbours.Where(cell => cell.IsOpen && cell != cellToOpen).ToList()
                                                      where openNeighbours.Any(openNeighbour =>
                                                                                   openNeighbour.AdjacentMines ==
-                                                                                  openNeighbour.Neighbours.Count(n => n != closedCell && !n.IsOpen && n.IsMine))
+                                                                                  openNeighbour.Neighbours.Count(
+                                                                                      n => n != closedCell && !n.IsOpen && n.IsMine))
                                                      select closedCell)
+            {
                 closedCell.State = KaboomState.Free;
+                undefinedBorderCells.Remove(closedCell);
+            }
+
+
+            // determine mine count range
+            var hiddenCells = field.Cells.Where<Cell<KaboomState>>(cell => !cell.IsOpen).Except(closedBorderCells).ToList();
+            int knownMinesCount = field.Cells.Count<Cell<KaboomState>>(cell => cell.IsMine);
+            int minimumMines = Math.Max(0, field.NumberOfMines - knownMinesCount - hiddenCells.Count);
+            int maximumMines = Math.Min(undefinedBorderCells.Count, field.NumberOfMines - knownMinesCount);
 
             // Create variable IDs for sat solver
-            var undefinedBorderCells = closedBorderCells.Where(cell => cell.State == KaboomState.Indeterminate).ToList();
             var boolIDsToCell = undefinedBorderCells.Select((cell, i) => (cell, i)).ToDictionary(x => x.i, x => x.cell);
             var cellsToBoolID = boolIDsToCell.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
 
@@ -77,53 +107,93 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
                 if (needed == 0) continue;
 
                 var undefinedNeighbours = neighbours.Where(neighbour => neighbour.State == KaboomState.Indeterminate).ToList();
+                if (undefinedNeighbours.Count == 0) continue;
                 constraints.AddRange(ConstraintGenerator.GenerateConstraints(undefinedNeighbours.Count, needed, undefinedNeighbours.Select(n => cellsToBoolID[n]).ToArray()));
+            }
+
+            if (closedBorderCells.Count > 0)
+            {
+                var constraint = closedBorderCellsExclusiveToOpenedCell
+                                 .SelectMany(cell => new[] {new Literal(cellsToBoolID[cell], false), new Literal(cellsToBoolID[cell], true)})
+                                 .ToArray();
+                if (constraint.Length > 0)
+                    constraints.Add(constraint);
             }
 
             if (constraints.Count == 0)
             {
-                var undefinedNeighbours = cellToOpen.Neighbours.Cast<Cell<KaboomState>>().Where(neighbour => neighbour.State == KaboomState.Indeterminate).ToList();
-                int[] IDs = undefinedNeighbours.Select(n => cellsToBoolID[n]).ToArray();
-                int needed = random.Next(undefinedNeighbours.Count + 1);
-                constraints.AddRange(ConstraintGenerator.GenerateConstraints(undefinedNeighbours.Count, needed, IDs));
+                cellToOpen.AdjacentMines = cellToOpen.Neighbours.Count(neighbour => neighbour.IsMine);
+                return;
             }
 
-            // determine 
-            int hiddenCells = field.Cells.Where<Cell<KaboomState>>(cell => !cell.IsOpen).Except(closedBorderCells).Count();
-            int knownMinesCount = field.Cells.Count<Cell<KaboomState>>(cell => cell.State == KaboomState.Mine);
-            int minimumMines = field.NumberOfMines - knownMinesCount - hiddenCells;
-            int maximumMines = field.NumberOfMines - knownMinesCount;
-            if (cellToOpen.State == KaboomState.Mine)
-            {
-                minimumMines -= 1;
-                maximumMines -= 1;
-            }
-
+            // get the solutions
             var solutions = (from solution in SatSolver.Solve(new SatSolverParams(), cellsToBoolID.Count, constraints)
                              let mines = solution.Literals.Count(literal => literal.Sense)
                              where mines >= minimumMines && mines <= maximumMines
                              select solution).ToList();
-            var literalsByCell = solutions.SelectMany(solution => solution.Literals)
-                                          .GroupBy(literal => literal.Var)
-                                          .ToDictionary(g => boolIDsToCell[g.Key], g => g.Select(literal => literal.Sense).ToList());
+
+            var solutionsByOpenedCellValue = solutions.GroupBy(solution =>
+                                                                   cellToOpen.Neighbours.Cast<Cell<KaboomState>>()
+                                                                             .Count(neighbour => neighbour.State == KaboomState.Indeterminate &&
+                                                                                                 solution.Literals.First(
+                                                                                                             literal =>
+                                                                                                                 literal.Var == cellsToBoolID[
+                                                                                                                     neighbour])
+                                                                                                         .Sense))
+                                                      .ToDictionary(g => g.Key, g => g.ToList());
+
+            Dictionary<Cell<KaboomState>, List<bool>> literalsByCell;
+            SatSolution chosenSolution;
+            if (solutionsByOpenedCellValue.Count > 0)
+            {
+                var indices = solutionsByOpenedCellValue.Keys.ToList();
+                int chosenSolutionIndex = indices[random.Next(indices.Count)];
+                var chosenSolutions = solutionsByOpenedCellValue[chosenSolutionIndex];
+
+                literalsByCell = chosenSolutions.SelectMany(solution => solution.Literals)
+                                                .GroupBy(literal => literal.Var)
+                                                .ToDictionary(g => boolIDsToCell[g.Key], g => g.Select(literal => literal.Sense).ToList());
+                chosenSolution = chosenSolutions[random.Next(chosenSolutions.Count)];
+            }
+            else
+            {
+                literalsByCell = solutions.SelectMany(solution => solution.Literals)
+                                                .GroupBy(literal => literal.Var)
+                                                .ToDictionary(g => boolIDsToCell[g.Key], g => g.Select(literal => literal.Sense).ToList());
+                 chosenSolution = solutions[random.Next(solutions.Count)];
+            }
+
+            // check if the solutions define some cells
             foreach (var cell in undefinedBorderCells)
             {
-                var literals = literalsByCell[cell];
+                if (!literalsByCell.TryGetValue(cell, out var literals)) continue;
                 if (literals.All(l => l))
+                {
                     cell.State = KaboomState.Mine;
+                    cell.IsMine = true;
+                }
                 else if (literals.All(l => !l))
                     cell.State = KaboomState.Free;
             }
 
-            foreach (var cell in field.Cells.Where<Cell<KaboomState>>(cell => cell.State == KaboomState.Mine))
-                cell.IsMine = true;
+            // Set solution values
+            foreach (var literal in chosenSolution.Literals.Where(literal => literal.Sense))
+            {
+                if (boolIDsToCell.TryGetValue(literal.Var, out var cell))
+                    cell.IsMine = true;
+            }
 
-            var chosenSolution = solutions[random.Next(solutions.Count)];
+            // Scatter rest of mines randomly
+            var possibleMineCoordinates = hiddenCells.Select(cell => (cell.X, cell.Y)).ToList();
+            for (int i = field.Cells.Count<Cell<KaboomState>>(cell => cell.IsMine); i<field.NumberOfMines; i++)
+            {
+                int index = random.Next(possibleMineCoordinates.Count);
+                (int x, int y) = possibleMineCoordinates[index];
+                field.Cells[x, y].IsMine = true;
+                possibleMineCoordinates.RemoveAt(index);
+            }
 
-            cellToOpen.AdjacentMines = cellToOpen.Neighbours.Cast<Cell<KaboomState>>()
-                                                 .Count(cell => cell.State == KaboomState.Mine ||
-                                                                cellsToBoolID.TryGetValue(cell, out var id) &&
-                                                                chosenSolution.Literals.First(Literal => Literal.Var == id).Sense);
+            cellToOpen.AdjacentMines = cellToOpen.Neighbours.Count(neighbour => neighbour.IsMine);
         }
     }
 }

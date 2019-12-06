@@ -18,7 +18,11 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
             this.solver = solver ?? throw new ArgumentNullException(nameof(solver));
 #pragma warning restore CA1303 // Do not pass literals as localized parameters
 
-            foreach (var cell in Cells) cell.State = KaboomState.None;
+            foreach (var cell in Cells)
+            {
+                cell.AdjacentMines = -1;
+                cell.State = KaboomState.None;
+            }
         }
         public override void Uncover(int x, int y)
         {
@@ -41,7 +45,7 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
                 }
             }
 
-            if (cascade) OpenCascade();
+//            if (cascade) OpenCascade();
             CheckState();
         }
         void OpenCascade()

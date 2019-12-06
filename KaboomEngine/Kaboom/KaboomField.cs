@@ -45,7 +45,7 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
                 }
             }
 
-//            if (cascade) OpenCascade();
+            if (cascade) OpenCascade();
             CheckState();
         }
         void OpenCascade()

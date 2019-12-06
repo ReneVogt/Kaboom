@@ -27,9 +27,7 @@
             </MenuItem>
         </Menu>
         <StackPanel>
-            <Grid HorizontalAlignment="Center">
-                <Button Command="{Binding RestartCommand}" Content="{Binding Board.State}"  ToolTip="Click to restart"/>
-            </Grid>
+            <Button Command="{Binding RestartCommand}" Background="Transparent" BorderThickness="0" Content="{Binding Board.State}"  ToolTip="Click to restart"/>
             <Views:KaboomBoardControl Margin="4,0,4,4" DataContext="{Binding Board, Mode=OneWay}"/>
         </StackPanel>
     </DockPanel>

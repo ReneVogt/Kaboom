@@ -95,6 +95,10 @@ namespace Com.Revo.Games.Kaboom.ViewModels
             Settings.Default.Expert = ExpertChecked;
             Settings.Default.Custom = CustomChecked;
             Settings.Default.Save();
+            OnPropertyChanged(nameof(BeginnerChecked));
+            OnPropertyChanged(nameof(AdvancedChecked));
+            OnPropertyChanged(nameof(ExpertChecked));
+            OnPropertyChanged(nameof(CustomChecked));
             Board = new KaboomBoardModel(width, height, numberOfMines);
         }
         public event PropertyChangedEventHandler PropertyChanged;

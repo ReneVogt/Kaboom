@@ -37,7 +37,7 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
 
             if (!cell.IsOpen)
             {
-                solver.Solve(this, (cell.X, cell.Y));
+                solver.Solve(this, cell.X, cell.Y);
                 if (cell.IsMine)
                 {
                     State = FieldState.Exploded;

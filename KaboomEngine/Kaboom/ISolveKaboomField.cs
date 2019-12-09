@@ -2,6 +2,6 @@
 {
     interface ISolveKaboomField
     {
-        void Solve(KaboomField field, (int x, int y) coordinatesToOpen);
+        void Solve(KaboomField field, int x, int y);
     }
 }

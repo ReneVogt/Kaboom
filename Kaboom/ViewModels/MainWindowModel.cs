@@ -34,6 +34,8 @@ namespace Com.Revo.Games.Kaboom.ViewModels
                     return;
                 debugChecked = value;
                 if (board != null) Board.DebugMode = debugChecked;
+                Settings.Default.Debug = value;
+                Settings.Default.Save();
                 OnPropertyChanged();
             }
         }

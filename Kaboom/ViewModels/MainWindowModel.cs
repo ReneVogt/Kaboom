@@ -13,16 +13,30 @@ namespace Com.Revo.Games.Kaboom.ViewModels
     public sealed class MainWindowModel : MarkupExtension, INotifyPropertyChanged
     {
         KaboomBoardModel board;
+        bool debugChecked;
         public CustomCommand ExitCommand { get; }
         public CustomCommand RestartCommand { get; }
         public CustomCommand BeginnerCommand { get; }
         public CustomCommand AdvancedCommand { get; }
         public CustomCommand ExpertCommand { get; }
         public CustomCommand UserDefinedCommand { get; }
+        public CustomCommand AboutCommand { get; }
         public bool BeginnerChecked { get; private set; }
         public bool AdvancedChecked { get; private set; }
         public bool ExpertChecked { get; private set; }
         public bool CustomChecked { get; private set; }
+        public bool DebugChecked
+        {
+            get => debugChecked;
+            set
+            {
+                if (value == debugChecked)
+                    return;
+                debugChecked = value;
+                if (board != null) Board.DebugMode = debugChecked;
+                OnPropertyChanged();
+            }
+        }
         public KaboomBoardModel Board
         {
             get => board;
@@ -31,6 +45,7 @@ namespace Com.Revo.Games.Kaboom.ViewModels
                 if (Equals(value, board))
                     return;
                 board = value;
+                if (board != null) board.DebugMode = DebugChecked;
                 OnPropertyChanged();
             }
         }
@@ -42,10 +57,12 @@ namespace Com.Revo.Games.Kaboom.ViewModels
             UserDefinedCommand = new CustomCommand(StartUserDefinedGame);
             RestartCommand = new CustomCommand(RestartGame);
             ExitCommand = new CustomCommand(() => Environment.Exit(0));
+            AboutCommand = new CustomCommand(OnAbout);
             BeginnerChecked = Settings.Default.Beginner;
             AdvancedChecked = Settings.Default.Advanced;
             ExpertChecked = Settings.Default.Expert;
             CustomChecked = Settings.Default.Custom;
+            DebugChecked = Settings.Default.Debug;
             RestartGame();
         }
         private void RestartGame()
@@ -99,7 +116,12 @@ namespace Com.Revo.Games.Kaboom.ViewModels
             OnPropertyChanged(nameof(AdvancedChecked));
             OnPropertyChanged(nameof(ExpertChecked));
             OnPropertyChanged(nameof(CustomChecked));
-            Board = new KaboomBoardModel(width, height, numberOfMines);
+
+            Board = new KaboomBoardModel(width, height, numberOfMines) {DebugMode = DebugChecked};
+        }
+        private void OnAbout()
+        {
+            MessageBox.Show("Not yet implemented!");
         }
         public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChangedInvocator]

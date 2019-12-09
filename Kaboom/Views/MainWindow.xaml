@@ -13,21 +13,36 @@
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding RestartCommand}" Key="F2"/>
+        <KeyBinding Command="{Binding BeginnerCommand}" Modifiers="Control" Key="B"/>
+        <KeyBinding Command="{Binding AdvancedCommand}" Modifiers="Control" Key="A"/>
+        <KeyBinding Command="{Binding ExpertCommand}" Modifiers="Control" Key="E"/>
+        <KeyBinding Command="{Binding UserDefinedCommand}" Modifiers="Control" Key="C"/>
+        <KeyBinding Command="{Binding AboutCommand}" Key="F1"/>
+    </Window.InputBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Game">
-                <MenuItem Header="New" Command="{Binding RestartCommand}"/>
+            <MenuItem Header="_Game">
+                <MenuItem Header="_New" Command="{Binding RestartCommand}" InputGestureText="F2"/>
                 <Separator/>
-                <MenuItem Header="Beginner" Command="{Binding BeginnerCommand}" IsCheckable="true" IsChecked="{Binding BeginnerChecked, Mode=OneWay}"/>
-                <MenuItem Header="Advanced" Command="{Binding AdvancedCommand}" IsCheckable="true" IsChecked="{Binding AdvancedChecked, Mode=OneWay}"/>
-                <MenuItem Header="Expert" Command="{Binding ExpertCommand}" IsCheckable="true" IsChecked="{Binding ExpertChecked, Mode=OneWay}"/>
-                <MenuItem Header="Custom..." Command="{Binding UserDefinedCommand}" IsCheckable="true" IsChecked="{Binding CustomChecked, Mode=OneWay}"/>
+                <MenuItem Header="_Beginner" Command="{Binding BeginnerCommand}" IsCheckable="true" IsChecked="{Binding BeginnerChecked, Mode=OneWay}" InputGestureText="Ctrl+B"/>
+                <MenuItem Header="_Advanced" Command="{Binding AdvancedCommand}" IsCheckable="true" IsChecked="{Binding AdvancedChecked, Mode=OneWay}" InputGestureText="Ctrl+A"/>
+                <MenuItem Header="_Expert" Command="{Binding ExpertCommand}" IsCheckable="true" IsChecked="{Binding ExpertChecked, Mode=OneWay}" InputGestureText="Ctrl+E"/>
+                <MenuItem Header="_Custom..." Command="{Binding UserDefinedCommand}" IsCheckable="true" IsChecked="{Binding CustomChecked, Mode=OneWay}" InputGestureText="Ctrl+C"/>
                 <Separator/>
-                <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+                <MenuItem Header="E_xit" Command="{Binding ExitCommand}" InputGestureText="Alt+F4"/>
+            </MenuItem>
+            <MenuItem Header="_?">
+                <MenuItem Header="_About..." Command="{Binding AboutCommand}" InputGestureText="F1"/>
+                <Separator/>
+                <MenuItem Header="_Debug mode" IsChecked="{Binding DebugChecked}" IsCheckable="True"/>
             </MenuItem>
         </Menu>
         <StackPanel>
-            <Button Command="{Binding RestartCommand}" Background="Transparent" BorderThickness="0" Content="{Binding Board.State}"  ToolTip="Click to restart"/>
+            <Button Command="{Binding RestartCommand}" 
+                    FontFamily="{StaticResource SevenSegmentFont}" FontSize="20" Foreground="{Binding Board.StateColor}"
+                    Background="Transparent" BorderThickness="0" Content="{Binding Board.State}" ToolTip="Click to restart"/>
             <Views:KaboomBoardControl Margin="4,0,4,4" DataContext="{Binding Board, Mode=OneWay}"/>
         </StackPanel>
     </DockPanel>

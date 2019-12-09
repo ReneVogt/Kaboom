@@ -15,5 +15,6 @@
         <BitmapImage x:Key="ImgSix" UriSource="Icons/six.ico" x:Shared="True"/>
         <BitmapImage x:Key="ImgSeven" UriSource="Icons/seven.ico" x:Shared="True"/>
         <BitmapImage x:Key="ImgEight" UriSource="Icons/eight.ico" x:Shared="True"/>
+        <FontFamily x:Key="SevenSegmentFont">pack://application:,,,/Fonts/#NI7Seg</FontFamily>
     </Application.Resources>
 </Application>

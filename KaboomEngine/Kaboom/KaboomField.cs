@@ -61,7 +61,7 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
                                                                                  .Where(neighbour => !neighbour.IsOpen)
                                                                                  .ToArray()
                                                       })
-                                          .Where(x => x.cell.AdjacentMines == x.closedNeighbours.Count(neighbour => neighbour.IsFlagged))
+                                          .Where(x => x.cell.AdjacentMines == 0)//x.closedNeighbours.Count(neighbour => neighbour.IsFlagged))
                                           .SelectMany(x => x.closedNeighbours.Where(neighbour => !neighbour.IsFlagged))
                                           .Distinct()
                                           .ToList();

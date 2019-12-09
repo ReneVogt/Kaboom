@@ -6,9 +6,9 @@ using Microsoft.SolverFoundation.Solvers;
 
 namespace Com.Revo.Games.KaboomEngine.Kaboom
 {
-    static class ConstraintGenerator
+    sealed class ConstraintsGenerator : IGenerateConstraints
     {
-        static void FillIndices(List<int[]> results, Stack<int> clause, int start, int elements, int needed)
+        private void FillIndices(List<int[]> results, Stack<int> clause, int start, int elements, int needed)
         {
             if (clause.Count == needed)
             {
@@ -23,7 +23,7 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
                 clause.Pop();
             }
         }
-        static int[][] EnumIndices(int elements, int needed)
+        private int[][] EnumIndices(int elements, int needed)
         {
             List<int[]> results = new List<int[]>();
             Stack<int> clause = new Stack<int>();
@@ -32,7 +32,7 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
         }
 
         [SuppressMessage("Usage", "CA2208:Argumentausnahmen korrekt instanziieren", Justification = "<Ausstehend>")]
-        public static List<Literal[]> GenerateConstraints(int elements, int expectedSum, int[] elementIDs)
+        public List<Literal[]> GenerateConstraints(int elements, int expectedSum, int[] elementIDs)
         {
             if (elements == 0 || elements < expectedSum) throw new ArgumentException();
 

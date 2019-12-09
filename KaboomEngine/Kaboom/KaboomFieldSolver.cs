@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Com.Revo.Games.KaboomEngine.Wrapper;
 using JetBrains.Annotations;
 using Microsoft.SolverFoundation.Solvers;
 
@@ -8,7 +9,13 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
 {
     class KaboomFieldSolver : ISolveKaboomField
     {
-        readonly Random random = new Random();
+        readonly IProvideRandom random;
+        readonly IGenerateConstraints constraintsGenerator;
+        public KaboomFieldSolver([NotNull] IGenerateConstraints constraintsGenerator, [NotNull] IProvideRandom random)
+        {
+            this.constraintsGenerator = constraintsGenerator ?? throw new ArgumentNullException(nameof(constraintsGenerator));
+            this.random = random ?? throw new ArgumentNullException(nameof(random));
+        }
         public void Solve([NotNull] KaboomField field, (int x, int y) coordinatesToOpen)
         {
             if (field == null)
@@ -108,7 +115,7 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
 
                 var undefinedNeighbours = neighbours.Where(neighbour => neighbour.State == KaboomState.Indeterminate).ToList();
                 if (undefinedNeighbours.Count == 0) continue;
-                constraints.AddRange(ConstraintGenerator.GenerateConstraints(undefinedNeighbours.Count, needed, undefinedNeighbours.Select(n => cellsToBoolID[n]).ToArray()));
+                constraints.AddRange(constraintsGenerator.GenerateConstraints(undefinedNeighbours.Count, needed, undefinedNeighbours.Select(n => cellsToBoolID[n]).ToArray()));
             }
 
             if (closedBorderCells.Count > 0)

@@ -7,5 +7,6 @@ namespace KaboomEngineTests.KaboomTests.KaboomFieldSolverTests
     [ExcludeFromCodeCoverage]
     public partial class KaboomFieldSolverTests
     {
+        public TestContext TestContext { get; set; }
     }
 }

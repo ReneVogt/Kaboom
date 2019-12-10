@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Com.Revo.Games.KaboomEngine.Wrapper;
+using Com.Revo.Games.KaboomEngine.Helper;
 using JetBrains.Annotations;
 using Microsoft.SolverFoundation.Solvers;
 
@@ -165,16 +165,22 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
         }
         void DetermineSolutions()
         {
-            var solutions = satSolver.Solve(constraints, cellsToBoolID.Count, minimumMines, maximumMines);
-            chosenSolution = solutions[random.Next(solutions.Count)];
+            var solutions = satSolver.Solve(constraints, cellsToBoolID.Count, minimumMines, maximumMines)
+                                     .GroupBy(OpenedCellMineCount).OrderBy(g => g.Key)
+                                     .ToDictionary(g => g.Key, g => g.ToList());
+
+            int[] keys = solutions.Keys.OrderBy(key => key).ToArray();
+            
+            int numberOfAdjacentMines = keys[random.Next(keys.Length)];
+            var chosenSolutions = solutions[numberOfAdjacentMines];
+            chosenSolution = chosenSolutions[random.Next(chosenSolutions.Count)];
 
             cellToOpen.AdjacentMines = OpenedCellMineCount(chosenSolution);
 
-            literalsByCell = solutions.Where(solution => OpenedCellMineCount(solution) == cellToOpen.AdjacentMines)
-                                      .SelectMany(solution => solution.Literals)
-                                      .GroupBy(literal => literal.Var)
-                                      .ToDictionary(g => boolIDsToCell[g.Key],
-                                                    g => g.Select(literal => literal.Sense).ToList());
+            literalsByCell = chosenSolutions.SelectMany(solution => solution.Literals)
+                                            .GroupBy(literal => literal.Var)
+                                            .ToDictionary(g => boolIDsToCell[g.Key],
+                                                          g => g.Select(literal => literal.Sense).ToList());
 
             int OpenedCellMineCount(SatSolution solution) =>
                 cellToOpen.Neighbours.Cast<Cell<KaboomState>>()

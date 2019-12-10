@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
+using Com.Revo.Games.KaboomEngine.Helper.Fakes;
 using Com.Revo.Games.KaboomEngine.Kaboom;
 using Com.Revo.Games.KaboomEngine.Kaboom.Fakes;
-using Com.Revo.Games.KaboomEngine.Wrapper.Fakes;
 using Microsoft.SolverFoundation.Solvers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -52,7 +52,45 @@ namespace KaboomEngineTests.KaboomTests.KaboomFieldSolverTests
         }
 
         [TestMethod]
+        public void Solve_Integration_001_00()
+        {
+            const string input = @"
+5 5 3
+11...
+.....
+.....
+.....
+.....";
+            const string output = @"
+5 5 3
+110_.
+!___.
+.....
+.....
+.....";
+            TestSolver(input, output, 2, 0, 0);
+        }
+        [TestMethod]
         public void Solve_Integration_001_01()
+        {
+            const string input = @"
+5 5 3
+11...
+.....
+.....
+.....
+.....";
+            const string output = @"
+5 5 3
+111?.
+??_?.
+.....
+.....
+.....";
+            TestSolver(input, output, 2, 0, 1);
+        }
+        [TestMethod]
+        public void Solve_Integration_001_02()
         {
             const string input = @"
 5 5 3
@@ -68,26 +106,7 @@ namespace KaboomEngineTests.KaboomTests.KaboomFieldSolverTests
 .....
 .....
 .....";
-            TestSolver(input, output, 2, 0, max => 0);
-        }
-        [TestMethod]
-        public void Solve_Integration_001_02()
-        {
-            const string input = @"
-5 5 3
-11...
-.....
-.....
-.....
-.....";
-            const string output = @"
-5 5 3
-111?.
-??_?.
-.....
-.....
-.....";
-            TestSolver(input, output, 2, 0, max => 1);
+            TestSolver(input, output, 2, 0, 2);
         }
         [TestMethod]
         public void Solve_Integration_001_03()
@@ -101,47 +120,15 @@ namespace KaboomEngineTests.KaboomTests.KaboomFieldSolverTests
 .....";
             const string output = @"
 5 5 3
-111?.
-??_?.
+113!.
+_!_!.
 .....
 .....
 .....";
-            TestSolver(input, output, 2, 0, max => 2);
+            TestSolver(input, output, 2, 0, 3);
         }
         [TestMethod]
-        public void Solve_Integration_002_01()
-        {
-            const string input = @"
-4 3 5
-2?..
-??..
-....
-";
-            const string output = @"
-4 3 5
-24!.
-!!!.
-....";
-            TestSolver(input, output, 1, 0, max => 0);
-        }
-        [TestMethod]
-        public void Solve_Integration_002_02()
-        {
-            const string input = @"
-4 3 5
-2?..
-??..
-....
-";
-            const string output = @"
-4 3 5
-23?.
-!!?.
-....";
-            TestSolver(input, output, 1, 0, max => 2);
-        }
-        [TestMethod]
-        public void Solve_Integration_002_03()
+        public void Solve_Integration_002_00()
         {
             const string input = @"
 4 3 5
@@ -154,28 +141,26 @@ namespace KaboomEngineTests.KaboomTests.KaboomFieldSolverTests
 22_.
 !!_.
 ....";
-            TestSolver(input, output, 1, 0, max => 3);
+            TestSolver(input, output, 1, 0, 0);
         }
         [TestMethod]
-        public void Solve_Integration_003_01()
+        public void Solve_Integration_002_01()
         {
             const string input = @"
-5 4 5
-22_..
-!!_..
-.....
-.....
+4 3 5
+2?..
+??..
+....
 ";
             const string output = @"
-5 4 5
-223!.
-!!_!.
-.....
-.....";
-            TestSolver(input, output, 2, 0, max => 0);
+4 3 5
+23?.
+!!?.
+....";
+            TestSolver(input, output, 1, 0, 1);
         }
         [TestMethod]
-        public void Solve_Integration_003_02()
+        public void Solve_Integration_003_00()
         {
             const string input = @"
 5 4 5
@@ -190,10 +175,10 @@ namespace KaboomEngineTests.KaboomTests.KaboomFieldSolverTests
 !!__.
 .....
 .....";
-            TestSolver(input, output, 2, 0, max => 3);
+            TestSolver(input, output, 2, 0, 0);
         }
         [TestMethod]
-        public void Solve_Integration_003_03()
+        public void Solve_Integration_003_01()
         {
             const string input = @"
 5 4 5
@@ -208,19 +193,39 @@ namespace KaboomEngineTests.KaboomTests.KaboomFieldSolverTests
 !!_?.
 .....
 .....";
-            TestSolver(input, output, 2, 0, max => 2);
+            TestSolver(input, output, 2, 0, 1);
+        }
+        [TestMethod]
+        public void Solve_Integration_003_02()
+        {
+            const string input = @"
+5 4 5
+22_..
+!!_..
+.....
+.....
+";
+            const string output = @"
+5 4 5
+223!.
+!!_!.
+.....
+.....";
+            TestSolver(input, output, 2, 0, 2);
         }
 
-        public TestContext TestContext { get; set; }
-        void TestSolver(string input, string expectedOutput, int x, int y, Func<int, int> random)
+        void TestSolver(string input, string expectedOutput, int x, int y, int random)
         {
             var constraintsGenerator = new ConstraintsGenerator();
+            bool randomed = false;
             var randomProvider = new StubIProvideRandom
             {
                 NextInt32 = max =>
                 {
+                    if (randomed) return 0;
+                    randomed = true;
                     TestContext.WriteLine($"Number of solutions: {max}");
-                    return random(max);
+                    return random;
                 }
             };
             var solver = new KaboomSatSolver();
@@ -238,8 +243,8 @@ namespace KaboomEngineTests.KaboomTests.KaboomFieldSolverTests
             sut.Solve(field, x, y);
             Assert.AreEqual(expectedOutput.Trim(), field.Serialize().Trim());
 
-            string GetSolutionString(SatSolution solution) =>
-                string.Join(String.Empty,
+            static string GetSolutionString(SatSolution solution) =>
+                string.Join(string.Empty,
                             solution.Literals.OrderBy(literal => literal.Var)
                                     .Select(literal => literal.Sense ? $"+{literal.Var}" : $"-{literal.Var}"));
         }

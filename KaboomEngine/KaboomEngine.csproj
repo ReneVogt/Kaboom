@@ -78,10 +78,13 @@
     <Compile Include="FieldExtensions.cs" />
     <Compile Include="FieldProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Wrapper\IProvideRandom.cs" />
-    <Compile Include="Wrapper\RandomProvider.cs" />
+    <Compile Include="Helper\IProvideRandom.cs" />
+    <Compile Include="Helper\KaboomRandom.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="KaboomEngine.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>

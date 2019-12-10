@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# IDE0061: Blocktextkörper für lokale Funktionen verwenden
+csharp_style_expression_bodied_local_functions = false:none

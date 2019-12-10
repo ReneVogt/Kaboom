@@ -29,6 +29,7 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
 
         SatSolution chosenSolution;
         Dictionary<Cell<KaboomState>, List<bool>> literalsByCell;
+        List<Cell<KaboomState>> hiddenCells;
 
         public KaboomFieldSolver([NotNull] IGenerateConstraints constraintsGenerator, [NotNull] IProvideRandom random, [NotNull] IKaboomSatSolver satSolver)
         {
@@ -56,7 +57,6 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
             undefinedBorderCells.ForEach(cell => cell.State = KaboomState.Indeterminate);
 
             // determine border mine count range
-            var hiddenCells = kaboomField.Cells.Where<Cell<KaboomState>>(cell => !cell.IsOpen).Except(closedBorderCells).ToList();
             int knownMinesCount = kaboomField.Cells.Count<Cell<KaboomState>>(cell => cell.IsMine);
             minimumMines = Math.Max(0, kaboomField.NumberOfMines - knownMinesCount - hiddenCells.Count);
             maximumMines = Math.Min(undefinedBorderCells.Count, kaboomField.NumberOfMines - knownMinesCount);
@@ -103,6 +103,8 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
                                                                .Where(neighbour => !neighbour.IsOpen &&
                                                                                    neighbour.Neighbours.All(n => !n.IsOpen || n == cellToOpen))
                                                                .ToList();
+
+            hiddenCells = field.Cells.Where<Cell<KaboomState>>(cell => !cell.IsOpen).Except(closedBorderCells).ToList();
 
             foreach (var cell in field.Cells)
             {
@@ -166,9 +168,9 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
             var solutions = satSolver.Solve(constraints, cellsToBoolID.Count, minimumMines, maximumMines);
             chosenSolution = solutions[random.Next(solutions.Count)];
 
-            int adjacentMinesToOpenedCell = OpenedCellMineCount(chosenSolution);
+            cellToOpen.AdjacentMines = OpenedCellMineCount(chosenSolution);
 
-            literalsByCell = solutions.Where(solution => OpenedCellMineCount(solution) == adjacentMinesToOpenedCell)
+            literalsByCell = solutions.Where(solution => OpenedCellMineCount(solution) == cellToOpen.AdjacentMines)
                                       .SelectMany(solution => solution.Literals)
                                       .GroupBy(literal => literal.Var)
                                       .ToDictionary(g => boolIDsToCell[g.Key],
@@ -177,6 +179,7 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
             int OpenedCellMineCount(SatSolution solution) =>
                 cellToOpen.Neighbours.Cast<Cell<KaboomState>>()
                           .Count(neighbour => !neighbour.IsOpen && (neighbour.State == KaboomState.Mine ||
+                                                                    neighbour.State == KaboomState.Indeterminate &&
                                                                     cellsToBoolID.TryGetValue(neighbour, out var id) && 
                                                                     solution.Literals.FirstOrDefault(literal => id == literal.Var).Sense));
 
@@ -195,13 +198,6 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
                 else if (literals.All(l => !l))
                     cell.State = KaboomState.Free;
             }
-
-            // determine new adjacent mines value for opened cell
-            cellToOpen.AdjacentMines = cellToOpen.Neighbours.Cast<Cell<KaboomState>>()
-                                                 .Count(neighbour => neighbour.IsMine || chosenSolution
-                                                                                         .Literals.FirstOrDefault(
-                                                                                             literal => boolIDsToCell[literal.Var] == neighbour)
-                                                                                         .Sense);
         }
     }
 }

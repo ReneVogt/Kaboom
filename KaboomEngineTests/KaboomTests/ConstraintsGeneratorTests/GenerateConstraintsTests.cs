@@ -9,7 +9,7 @@ namespace KaboomEngineTests.KaboomTests.ConstraintsGeneratorTests
 {
     public partial class ConstraintsGeneratorTests
     {
-        static string SortTestResult(List<Literal[]> testResult) =>
+        static string SortTestResult(IEnumerable<Literal[]> testResult) =>
             string.Join("|",
                         testResult.Select(line =>
                                               string.Join(string.Empty,

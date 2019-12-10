@@ -67,9 +67,11 @@
     <Compile Include="ICellCollection.cs" />
     <Compile Include="Kaboom\ConstraintsGenerator.cs" />
     <Compile Include="Kaboom\IGenerateConstraints.cs" />
+    <Compile Include="Kaboom\IKaboomSatSolver.cs" />
     <Compile Include="Kaboom\ISolveKaboomField.cs" />
     <Compile Include="Kaboom\KaboomField.cs" />
     <Compile Include="Kaboom\KaboomFieldSolver.cs" />
+    <Compile Include="Kaboom\KaboomSatSolver.cs" />
     <Compile Include="Kaboom\KaboomState.cs" />
     <Compile Include="Minesweeper\MinesweeperField.cs" />
     <Compile Include="IField.cs" />

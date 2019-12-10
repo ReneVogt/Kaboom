@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Com.Revo.Games.KaboomEngine.Minesweeper 
 {
+    [ExcludeFromCodeCoverage]
     sealed class MinesweeperField : Field<object>
     {
         static readonly Random random = new Random();

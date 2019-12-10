@@ -93,7 +93,7 @@ namespace Com.Revo.Games.Kaboom.ViewModels
         {
             var dlg = new DlgCustomGame
             {
-                Owner = Application.Current.MainWindow,
+                Owner = Application.Current.MainWindow
             };
             dlg.CustomGame.Width = Settings.Default.Width;
             dlg.CustomGame.Height = Settings.Default.Height;

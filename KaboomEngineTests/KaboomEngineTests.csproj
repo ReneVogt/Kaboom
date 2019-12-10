@@ -71,6 +71,7 @@
     <Compile Include="FieldExtensionsTests\FieldExtensionsTests.cs" />
     <Compile Include="FieldExtensionsTests\GetCoordinatesAdjacentToTests.cs" />
     <Compile Include="KaboomEngineTestsCli.cs" />
+    <Compile Include="KaboomFieldSerializer.cs" />
     <Compile Include="KaboomTests\ConstraintsGeneratorTests\ConstraintsGeneratorTests.cs" />
     <Compile Include="KaboomTests\ConstraintsGeneratorTests\GenerateConstraintsTests.cs" />
     <Compile Include="KaboomTests\KaboomFieldSolverTests\KaboomFieldSolverTests.cs" />

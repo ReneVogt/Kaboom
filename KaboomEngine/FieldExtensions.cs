@@ -31,16 +31,20 @@ namespace Com.Revo.Games.KaboomEngine
             if (y >= field.Height) throw new IndexOutOfRangeException($"{nameof(y)} must be less than {field.Height}!");
 #pragma warning restore CA1303 // Do not pass literals as localized parameters
 
-            if (x > 0 && y > 0) yield return (x - 1, y - 1);
-            if (y > 0) yield return (x, y - 1);
-            if (x < field.Width - 1 && y > 0) yield return (x + 1, y - 1);
+            return Iterator();
 
-            if (x > 0) yield return (x - 1, y);
-            if (x < field.Width - 1) yield return (x + 1, y);
+            IEnumerable<(int x, int y)> Iterator()
+            {
+                if (x > 0 && y > 0) yield return (x - 1, y - 1);
+                if (y > 0) yield return (x, y - 1);
+                if (x < field.Width - 1 && y > 0) yield return (x + 1, y - 1);
 
-            if (x > 0 && y < field.Height - 1) yield return (x - 1, y + 1);
-            if (y < field.Height - 1) yield return (x, y + 1);
-            if (x < field.Width - 1 && y < field.Height - 1) yield return (x + 1, y + 1);
-        }
+                if (x > 0) yield return (x - 1, y);
+                if (x < field.Width - 1) yield return (x + 1, y);
+
+                if (x > 0 && y < field.Height - 1) yield return (x - 1, y + 1);
+                if (y < field.Height - 1) yield return (x, y + 1);
+                if (x < field.Width - 1 && y < field.Height - 1) yield return (x + 1, y + 1);
+            }        }
     }
 }

@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TestData>
+  <TestCase>
+    <Name>001</Name>
+    <Board>
+      5 5 3
+      11...
+      .....
+      .....
+      .....
+      .....
+    </Board>
+    <X>2</X>
+    <Y>0</Y>
+    <Solution>
+      <Random>0</Random>
+      <Expected>
+        5 5 3
+        110_.
+        !___.
+        .....
+        .....
+        .....
+      </Expected>
+    </Solution>
+    <Solution>
+      <Random>1</Random>
+      <Expected>
+        5 5 3
+        111?.
+        ??_?.
+        .....
+        .....
+        .....
+      </Expected>
+    </Solution>
+    <Solution>
+      <Random>2</Random>
+      <Expected>
+        5 5 3
+        112?.
+        ??_?.
+        .....
+        .....
+        .....
+      </Expected>
+    </Solution>
+    <Solution>
+      <Random>3</Random>
+      <Expected>
+        5 5 3
+        113!.
+        _!_!.
+        .....
+        .....
+        .....
+      </Expected>
+    </Solution>
+  </TestCase>
+  <TestCase>
+    <Name>002</Name>
+    <Board>
+      4 3 5
+      2?..
+      ??..
+      ....
+    </Board>
+    <X>1</X>
+    <Y>0</Y>
+    <Solution>
+      <Random>0</Random>
+      <Expected>
+        4 3 5
+        22_.
+        !!_.
+        ....
+      </Expected>
+    </Solution>
+    <Solution>
+      <Random>1</Random>
+      <Expected>
+        4 3 5
+        23?.
+        !!?.
+        ....
+      </Expected>
+    </Solution>
+  </TestCase>
+  <TestCase>
+    <Name>003</Name>
+    <Board>
+      5 4 5
+      22_..
+      !!_..
+      .....
+      .....
+    </Board>
+    <X>2</X>
+    <Y>0</Y>
+    <Solution>
+      <Random>0</Random>
+      <Expected>
+        5 4 5
+        221_.
+        !!__.
+        .....
+        .....
+      </Expected>
+    </Solution>
+    <Solution>
+      <Random>1</Random>
+      <Expected>
+        5 4 5
+        222?.
+        !!_?.
+        .....
+        .....
+      </Expected>
+    </Solution>
+    <Solution>
+      <Random>2</Random>
+      <Expected>
+        5 4 5
+        223!.
+        !!_!.
+        .....
+        .....
+      </Expected>
+    </Solution>
+  </TestCase>
+</TestData>

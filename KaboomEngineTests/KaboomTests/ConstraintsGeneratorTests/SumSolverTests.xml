@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TestData>
+  <SumSolution>
+    <NumberOfElements>1</NumberOfElements>
+    <ExpectedTrueElements>0</ExpectedTrueElements>
+    <Solution>
+      -0
+    </Solution>
+  </SumSolution>
+</TestData>

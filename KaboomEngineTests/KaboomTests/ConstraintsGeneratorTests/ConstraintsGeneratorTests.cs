@@ -7,5 +7,6 @@ namespace KaboomEngineTests.KaboomTests.ConstraintsGeneratorTests
     [ExcludeFromCodeCoverage]
     public partial class ConstraintsGeneratorTests
     {
+        public TestContext TestContext { get; set; }
     }
 }

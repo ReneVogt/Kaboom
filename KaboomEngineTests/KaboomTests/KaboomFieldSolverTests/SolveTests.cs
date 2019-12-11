@@ -52,172 +52,14 @@ namespace KaboomEngineTests.KaboomTests.KaboomFieldSolverTests
         }
 
         [TestMethod]
-        public void Solve_Integration_001_00()
-        {
-            const string input = @"
-5 5 3
-11...
-.....
-.....
-.....
-.....";
-            const string output = @"
-5 5 3
-110_.
-!___.
-.....
-.....
-.....";
-            TestSolver(input, output, 2, 0, 0);
-        }
-        [TestMethod]
-        public void Solve_Integration_001_01()
-        {
-            const string input = @"
-5 5 3
-11...
-.....
-.....
-.....
-.....";
-            const string output = @"
-5 5 3
-111?.
-??_?.
-.....
-.....
-.....";
-            TestSolver(input, output, 2, 0, 1);
-        }
-        [TestMethod]
-        public void Solve_Integration_001_02()
-        {
-            const string input = @"
-5 5 3
-11...
-.....
-.....
-.....
-.....";
-            const string output = @"
-5 5 3
-112?.
-??_?.
-.....
-.....
-.....";
-            TestSolver(input, output, 2, 0, 2);
-        }
-        [TestMethod]
-        public void Solve_Integration_001_03()
-        {
-            const string input = @"
-5 5 3
-11...
-.....
-.....
-.....
-.....";
-            const string output = @"
-5 5 3
-113!.
-_!_!.
-.....
-.....
-.....";
-            TestSolver(input, output, 2, 0, 3);
-        }
-        [TestMethod]
-        public void Solve_Integration_002_00()
-        {
-            const string input = @"
-4 3 5
-2?..
-??..
-....
-";
-            const string output = @"
-4 3 5
-22_.
-!!_.
-....";
-            TestSolver(input, output, 1, 0, 0);
-        }
-        [TestMethod]
-        public void Solve_Integration_002_01()
-        {
-            const string input = @"
-4 3 5
-2?..
-??..
-....
-";
-            const string output = @"
-4 3 5
-23?.
-!!?.
-....";
-            TestSolver(input, output, 1, 0, 1);
-        }
-        [TestMethod]
-        public void Solve_Integration_003_00()
-        {
-            const string input = @"
-5 4 5
-22_..
-!!_..
-.....
-.....
-";
-            const string output = @"
-5 4 5
-221_.
-!!__.
-.....
-.....";
-            TestSolver(input, output, 2, 0, 0);
-        }
-        [TestMethod]
-        public void Solve_Integration_003_01()
-        {
-            const string input = @"
-5 4 5
-22_..
-!!_..
-.....
-.....
-";
-            const string output = @"
-5 4 5
-222?.
-!!_?.
-.....
-.....";
-            TestSolver(input, output, 2, 0, 1);
-        }
-        [TestMethod]
-        public void Solve_Integration_003_02()
-        {
-            const string input = @"
-5 4 5
-22_..
-!!_..
-.....
-.....
-";
-            const string output = @"
-5 4 5
-223!.
-!!_!.
-.....
-.....";
-            TestSolver(input, output, 2, 0, 2);
-        }
-
-        void TestSolver(string input, string expectedOutput, int x, int y, int random)
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML",
+            "|DataDirectory|\\KaboomTests\\KaboomFieldSolverTests\\solvings.xml", "TestCase",
+            DataAccessMethod.Sequential)]
+        public void Solve_Integration()
         {
             var constraintsGenerator = new ConstraintsGenerator();
             bool randomed = false;
+            int random = 0;
             var randomProvider = new StubIProvideRandom
             {
                 NextInt32 = max =>
@@ -228,6 +70,11 @@ _!_!.
                     return random;
                 }
             };
+
+            string name = TestContext.DataRow["Name"].ToString();
+            int x = Convert.ToInt32(TestContext.DataRow["X"].ToString());
+            int y = Convert.ToInt32(TestContext.DataRow["Y"].ToString());
+
             var solver = new KaboomSatSolver();
             var satSolver = new StubIKaboomSatSolver
             {
@@ -237,16 +84,42 @@ _!_!.
                               .OrderBy(GetSolutionString)
                               .ToList()
             };
-            var sut = new KaboomFieldSolver(constraintsGenerator, 
+            var sut = new KaboomFieldSolver(constraintsGenerator,
                                             randomProvider, satSolver);
-            KaboomField field = input.ToKaboomField(sut);
-            sut.Solve(field, x, y);
-            Assert.AreEqual(expectedOutput.Trim(), field.Serialize().Trim());
+
+            int errors = 0;
+            foreach(var row in TestContext.DataRow.GetChildRows("TestCase_Solution"))
+            {
+                randomed = false;
+                random = Convert.ToInt32(row["Random"].ToString());
+                var field = TestContext.DataRow["Board"].ToString().ToKaboomField(sut);
+                var expectedResult = string.Join(Environment.NewLine,
+                                                 row["Expected"].ToString().Split('\n').Select(line => line.Trim()))
+                                           .Trim();
+                sut.Solve(field, x, y);
+
+                string result = field.Serialize().Trim();
+
+                if (result == expectedResult)
+                {
+                    TestContext.WriteLine($"Test {name}/{random} passed.");
+                    continue;
+                }
+                TestContext.WriteLine($"Test {name}/{random} failed!");
+                TestContext.WriteLine("Expected:");
+                TestContext.WriteLine(expectedResult);
+                TestContext.WriteLine("Instead:");
+                TestContext.WriteLine(result);
+                errors += 1;
+            }
+
+            Assert.AreEqual(0, errors);
 
             static string GetSolutionString(SatSolution solution) =>
                 string.Join(string.Empty,
                             solution.Literals.OrderBy(literal => literal.Var)
                                     .Select(literal => literal.Sense ? $"+{literal.Var}" : $"-{literal.Var}"));
+
         }
     }
 }

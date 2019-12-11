@@ -37,7 +37,7 @@ namespace KaboomEngineTests
         }
         public static KaboomField ToKaboomField(this string s, ISolveKaboomField solver)
         {
-            string[] lines = s.Trim().Split('\n');
+            string[] lines = s.Trim().Split('\n').Select(line => line.Trim()).ToArray();
             string[] infos = lines[0].Split();
             KaboomField field = new KaboomField(Convert.ToInt32(infos[0]), Convert.ToInt32(infos[1]), Convert.ToInt32(infos[2]), solver);
 

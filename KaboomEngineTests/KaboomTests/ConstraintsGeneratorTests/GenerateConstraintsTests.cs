@@ -129,5 +129,35 @@ namespace KaboomEngineTests.KaboomTests.ConstraintsGeneratorTests
             var result = SortTestResult(sut.GenerateConstraints(4, 3, new []{1,3,5,7}));
             Assert.AreEqual("+1+3|+1+5|+1+7|+3+5|+3+7|+5+7|-1-3-5-7", result);
         }
+        [TestMethod]
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML",
+            "|DataDirectory|\\KaboomTests\\ConstraintsGeneratorTests\\SumSolverTests.xml", "SumSolution",
+            DataAccessMethod.Sequential)]
+        public void GenerateConstraints_SolverIntegration()
+        {
+            int numberOfElements = Convert.ToInt32(TestContext.DataRow["NumberOfElements"]);
+            int expectedTrueElements = Convert.ToInt32(TestContext.DataRow["ExpectedTrueElements"]);
+            string expectedSolution = string.Join(Environment.NewLine, 
+                                                  TestContext.DataRow["Solution"].ToString().Split('\n').Select(line => line.Trim())).Trim();
+
+            var sut = new ConstraintsGenerator();
+            var constraints = sut.GenerateConstraints(numberOfElements, expectedTrueElements);
+            string solutions = string.Join(Environment.NewLine, SatSolver.Solve(new SatSolverParams(), numberOfElements, constraints)
+                                                                         .Select(solution => string.Join(
+                                                                                     string.Empty, solution.Literals.OrderBy(literal => literal.Var)
+                                                                                                           .Select(literal => literal.Sense
+                                                                                                                                  ? $"+{literal.Var}"
+                                                                                                                                  : $"-{literal.Var}")))
+                                                                         .OrderBy(line => line));
+
+            if (solutions == expectedSolution) return;
+            TestContext.WriteLine($"Test case with {numberOfElements} elements and {expectedTrueElements} expected true elements failed:");
+            TestContext.WriteLine("Expected result:");
+            TestContext.WriteLine(expectedSolution);
+            TestContext.WriteLine("Instead:");
+            TestContext.WriteLine(solutions);
+
+            Assert.Fail("Solutions did not match expectation!");
+        }
     }
 }

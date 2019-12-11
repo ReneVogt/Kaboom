@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Com.Revo.Games.KaboomEngine.Helper;
 using JetBrains.Annotations;
@@ -31,6 +32,7 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
         Dictionary<Cell<KaboomState>, List<bool>> literalsByCell;
         List<Cell<KaboomState>> hiddenCells;
 
+        [ExcludeFromCodeCoverage]
         public KaboomFieldSolver([NotNull] IGenerateConstraints constraintsGenerator, [NotNull] IProvideRandom random, [NotNull] IKaboomSatSolver satSolver)
         {
             this.constraintsGenerator = constraintsGenerator ?? throw new ArgumentNullException(nameof(constraintsGenerator));
@@ -195,7 +197,7 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
             // check if the solutions define some cells
             foreach (var cell in undefinedBorderCells)
             {
-                if (!literalsByCell.TryGetValue(cell, out var literals)) continue;
+                var literals = literalsByCell[cell];
                 if (literals.All(l => l))
                 {
                     cell.State = KaboomState.Mine;

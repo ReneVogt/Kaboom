@@ -2,9 +2,9 @@
 
 namespace KaboomEngineTests
 {
+    [ExcludeFromCodeCoverage]
     static class KaboomEngineTestsCli
     {
-        [ExcludeFromCodeCoverage]
         static void Main()
         {
         }

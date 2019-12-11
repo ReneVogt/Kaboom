@@ -19,7 +19,9 @@ namespace KaboomEngineTests
                                               new string(Enumerable.Range(0, field.Width)
                                                                    .Select(col => field.Cells[col, row])
                                                                    .Select(cell => cell.IsOpen
-                                                                                       ? cell.AdjacentMines.ToString()[0]
+                                                                                       ? cell.IsMine
+                                                                                             ? 'X'
+                                                                                             : cell.AdjacentMines.ToString()[0]
                                                                                        : cell.IsMine || cell.State == KaboomState.Mine
                                                                                            ? '!'
                                                                                            : cell.State switch

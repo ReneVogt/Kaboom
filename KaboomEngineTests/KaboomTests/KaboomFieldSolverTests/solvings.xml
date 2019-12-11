@@ -128,4 +128,156 @@
       </Expected>
     </Solution>
   </TestCase>
+  <TestCase>
+    <Name>004</Name>
+    <Board>
+      5 5 8
+      .....
+      .....
+      .....
+      .....
+      .....
+    </Board>
+    <X>2</X>
+    <Y>2</Y>
+    <Solution>
+      <Random>0</Random>
+      <Expected>
+        5 5 8
+        .....
+        .___.
+        ._0_.
+        .___.
+        .....
+      </Expected>
+    </Solution>
+    <Solution>
+      <Random>1</Random>
+      <Expected>
+        5 5 8
+        .....
+        .???.
+        .?1?.
+        .???.
+        .....
+      </Expected>
+    </Solution>
+    <Solution>
+      <Random>2</Random>
+      <Expected>
+        5 5 8
+        .....
+        .???.
+        .?2?.
+        .???.
+        .....
+      </Expected>
+    </Solution>
+    <Solution>
+      <Random>3</Random>
+      <Expected>
+        5 5 8
+        .....
+        .???.
+        .?3?.
+        .???.
+        .....
+      </Expected>
+    </Solution>
+    <Solution>
+      <Random>4</Random>
+      <Expected>
+        5 5 8
+        .....
+        .???.
+        .?4?.
+        .???.
+        .....
+      </Expected>
+    </Solution>
+    <Solution>
+      <Random>5</Random>
+      <Expected>
+        5 5 8
+        .....
+        .???.
+        .?5?.
+        .???.
+        .....
+      </Expected>
+    </Solution>
+    <Solution>
+      <Random>6</Random>
+      <Expected>
+        5 5 8
+        .....
+        .???.
+        .?6?.
+        .???.
+        .....
+      </Expected>
+    </Solution>
+    <Solution>
+      <Random>7</Random>
+      <Expected>
+        5 5 8
+        .....
+        .???.
+        .?7?.
+        .???.
+        .....
+      </Expected>
+    </Solution>
+    <Solution>
+      <Random>8</Random>
+      <Expected>
+        5 5 8
+        .....
+        .!!!.
+        .!8!.
+        .!!!.
+        .....
+      </Expected>
+    </Solution>
+  </TestCase>
+  <TestCase>
+    <Name>005</Name>
+    <Board>
+      3 3 3
+      11_
+      !2_
+      ???
+    </Board>
+    <X>0</X>
+    <Y>2</Y>
+    <Solution>
+      <Random>0</Random>
+      <Expected>
+        3 3 3
+        11_
+        !2_
+        X??
+      </Expected>
+    </Solution>
+  </TestCase>
+  <TestCase>
+    <Name>006</Name>
+    <Board>
+      3 3 3
+      11_
+      !20
+      !20
+    </Board>
+    <X>2</X>
+    <Y>0</Y>
+    <Solution>
+      <Random>0</Random>
+      <Expected>
+        3 3 3
+        110
+        !20
+        !20
+      </Expected>
+    </Solution>
+  </TestCase>
 </TestData>

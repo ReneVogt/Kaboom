@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 
 namespace Com.Revo.Games.KaboomEngine.Kaboom
 {
+    [ExcludeFromCodeCoverage]
     sealed class KaboomField : Field<KaboomState>
     {
         readonly ISolveKaboomField solver;

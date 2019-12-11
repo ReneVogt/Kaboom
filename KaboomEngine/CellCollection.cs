@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace Com.Revo.Games.KaboomEngine {
+namespace Com.Revo.Games.KaboomEngine 
+{
+    [ExcludeFromCodeCoverage]
     sealed class CellCollection<TState> : ICellCollection, IEnumerable<Cell<TState>>
     {
         readonly Cell<TState>[][] cells;

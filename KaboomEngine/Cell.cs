@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Com.Revo.Games.KaboomEngine
 {
+    [ExcludeFromCodeCoverage]
     sealed class Cell<TState> : ICell
     {
         bool flagged;

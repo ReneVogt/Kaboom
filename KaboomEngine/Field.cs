@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Com.Revo.Games.KaboomEngine 
 {
+    [ExcludeFromCodeCoverage]
     abstract class Field<TState> : IField
     {
         FieldState state = FieldState.Sweeping;

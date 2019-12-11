@@ -121,9 +121,9 @@ namespace Com.Revo.Games.Kaboom.ViewModels
 
             Board = new KaboomBoardModel(width, height, numberOfMines) {DebugMode = DebugChecked};
         }
-        private void OnAbout()
+        private static void OnAbout()
         {
-            MessageBox.Show("Not yet implemented!");
+            new DlgAbout {Owner = Application.Current.MainWindow}.ShowDialog();
         }
         public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChangedInvocator]

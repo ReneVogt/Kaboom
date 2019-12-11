@@ -1,9 +1,9 @@
 using System.Linq;
-using Com.Revo.Games.KaboomEngine.Helper;
+using Com.Revo.Games.KaboomEngine.Kaboom;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace KaboomEngineTests.HelperTests.KaboomRandomTests
+namespace KaboomEngineTests.KaboomTests.KaboomRandomTests
 {
     public partial class KaboomRandomTests
     {

@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Com.Revo.Games.KaboomEngine.Helper.Fakes;
 using Com.Revo.Games.KaboomEngine.Kaboom;
 using Com.Revo.Games.KaboomEngine.Kaboom.Fakes;
 using Microsoft.SolverFoundation.Solvers;

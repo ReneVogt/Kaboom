@@ -1,4 +1,4 @@
-﻿namespace Com.Revo.Games.KaboomEngine.Helper 
+﻿namespace Com.Revo.Games.KaboomEngine.Kaboom 
 {
     interface IProvideRandom
     {

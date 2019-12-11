@@ -81,7 +81,7 @@ namespace Com.Revo.Games.KaboomEngine.Kaboom
                 return;
             }
 
-            if (Cells.All<Cell<KaboomState>>(cell => cell.IsOpen || cell.IsMine))
+            if (Cells.Count<Cell<KaboomState>>(cell => !cell.IsOpen) == NumberOfMines)
                 State = FieldState.Solved;
         }
 

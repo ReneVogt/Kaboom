@@ -26,10 +26,10 @@
             <MenuItem Header="_Game">
                 <MenuItem Header="_New" Command="{Binding RestartCommand}" InputGestureText="F2"/>
                 <Separator/>
-                <MenuItem Header="_Beginner" Command="{Binding BeginnerCommand}" IsCheckable="true" IsChecked="{Binding BeginnerChecked, Mode=OneWay}" InputGestureText="Ctrl+B"/>
-                <MenuItem Header="_Advanced" Command="{Binding AdvancedCommand}" IsCheckable="true" IsChecked="{Binding AdvancedChecked, Mode=OneWay}" InputGestureText="Ctrl+A"/>
-                <MenuItem Header="_Expert" Command="{Binding ExpertCommand}" IsCheckable="true" IsChecked="{Binding ExpertChecked, Mode=OneWay}" InputGestureText="Ctrl+E"/>
-                <MenuItem Header="_Custom..." Command="{Binding UserDefinedCommand}" IsCheckable="true" IsChecked="{Binding CustomChecked, Mode=OneWay}" InputGestureText="Ctrl+C"/>
+                <MenuItem Header="_Beginner" Command="{Binding BeginnerCommand}" IsCheckable="False" IsChecked="{Binding BeginnerChecked, Mode=OneWay}" InputGestureText="Ctrl+B"/>
+                <MenuItem Header="_Advanced" Command="{Binding AdvancedCommand}" IsCheckable="False" IsChecked="{Binding AdvancedChecked, Mode=OneWay}" InputGestureText="Ctrl+A"/>
+                <MenuItem Header="_Expert" Command="{Binding ExpertCommand}" IsCheckable="False" IsChecked="{Binding ExpertChecked, Mode=OneWay}" InputGestureText="Ctrl+E"/>
+                <MenuItem Header="_Custom..." Command="{Binding UserDefinedCommand}" IsCheckable="False" IsChecked="{Binding CustomChecked, Mode=OneWay}" InputGestureText="Ctrl+C"/>
                 <Separator/>
                 <MenuItem Header="E_xit" Command="{Binding ExitCommand}" InputGestureText="Alt+F4"/>
             </MenuItem>

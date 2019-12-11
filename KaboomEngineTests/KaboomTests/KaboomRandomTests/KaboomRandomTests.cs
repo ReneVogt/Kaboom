@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace KaboomEngineTests.HelperTests.KaboomRandomTests
+namespace KaboomEngineTests.KaboomTests.KaboomRandomTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]

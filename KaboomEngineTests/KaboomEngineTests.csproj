@@ -71,8 +71,8 @@
   <ItemGroup>
     <Compile Include="FieldExtensionsTests\FieldExtensionsTests.cs" />
     <Compile Include="FieldExtensionsTests\GetCoordinatesAdjacentToTests.cs" />
-    <Compile Include="HelperTests\KaboomRandomTests\KaboomRandomTests.cs" />
-    <Compile Include="HelperTests\KaboomRandomTests\NextTests.cs" />
+    <Compile Include="KaboomTests\KaboomRandomTests\KaboomRandomTests.cs" />
+    <Compile Include="KaboomTests\KaboomRandomTests\NextTests.cs" />
     <Compile Include="KaboomEngineTestsCli.cs" />
     <Compile Include="KaboomFieldSerializer.cs" />
     <Compile Include="KaboomTests\ConstraintsGeneratorTests\ConstraintsGeneratorTests.cs" />

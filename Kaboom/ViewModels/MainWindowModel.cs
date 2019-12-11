@@ -53,6 +53,13 @@ namespace Com.Revo.Games.Kaboom.ViewModels
         }
         public MainWindowModel()
         {
+            if (!Settings.Default.Updated)
+            {
+                Settings.Default.Upgrade();
+                Settings.Default.Updated = true;
+                Settings.Default.Save();
+            }
+
             BeginnerCommand = new CustomCommand(StartBeginnerGame);
             AdvancedCommand = new CustomCommand(StartAdvancedGame);
             ExpertCommand = new CustomCommand(StartExpertGame);

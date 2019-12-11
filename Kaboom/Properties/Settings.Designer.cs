@@ -118,5 +118,17 @@ namespace Com.Revo.Games.Kaboom.Properties {
                 this["Debug"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Updated {
+            get {
+                return ((bool)(this["Updated"]));
+            }
+            set {
+                this["Updated"] = value;
+            }
+        }
     }
 }

@@ -25,10 +25,10 @@
                     <Label Grid.Row="0" Padding="0" x:Name="lbVersion" FontSize="25" FontWeight="Bold">Kaboom Version</Label>
                     <TextBlock Grid.Row="1" FontSize="15" Width="300" TextWrapping="WrapWithOverflow">
                         A Minesweeper derivate inspired by <LineBreak/>
-                        <Hyperlink NavigateUri="https://pwmarcz.pl/blog/kaboom" RequestNavigate="OnLinkClicked">https://pwmarcz.pl/blog/kaboom</Hyperlink><LineBreak/>
+                        <Hyperlink NavigateUri="https://pwmarcz.pl/blog/kaboom" RequestNavigate="OnLinkClicked">https://pwmarcz.pl/blog/kaboom</Hyperlink>.<LineBreak/>
                         <LineBreak/>
                         Icons, images etc. taken from <LineBreak/>
-                        <Hyperlink NavigateUri="http://www.rw-designer.com/icon-set/minesweeper" RequestNavigate="OnLinkClicked">http://www.rw-designer.com/icon-set/minesweeper</Hyperlink> (m.smejkalova@gmail.com).<LineBreak/>
+                        <Hyperlink NavigateUri="http://www.rw-designer.com/icon-set/minesweeper" RequestNavigate="OnLinkClicked">http://www.rw-designer.com/icon-set/minesweeper</Hyperlink>.<LineBreak/>
                         <LineBreak/>
                         Created by René Vogt, 2019<LineBreak/>
                         <Hyperlink NavigateUri="https://github.com/ReneVogt/Kaboom" RequestNavigate="OnLinkClicked">https://github.com/ReneVogt/Kaboom</Hyperlink>

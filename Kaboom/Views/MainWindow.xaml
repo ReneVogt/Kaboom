@@ -40,7 +40,7 @@
             </MenuItem>
         </Menu>
         <StackPanel>
-            <Button Command="{Binding RestartCommand}" HorizontalAlignment="Center" Margin="2,2,4,2"
+            <Button Command="{Binding RestartCommand}" HorizontalAlignment="Center" Margin="2,4,2,4"
                     FontFamily="{StaticResource SevenSegmentFont}" FontSize="20" Foreground="{Binding Board.StateColor}"
                     Background="Black" BorderThickness="0" Content="{Binding Board.State}" ToolTip="Click to restart"/>
             <Views:KaboomBoardControl Margin="4,0,4,4" DataContext="{Binding Board, Mode=OneWay}"/>
